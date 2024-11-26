@@ -6,10 +6,17 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChildrenController;
 use App\Http\Controllers\CourtAppointmentController;
+use App\Http\Controllers\MedicalAppointmentController;
+use App\Http\Controllers\LogController;
 
 Route::get('/', function () {
     return view('admin.login');
 });
+
+Route::get('head/login', [UserController::class,'headIndex'])->name('head.login');
+Route::post('head/authenticate', [UserController::class,'headAuthenticate'])->name('head.authenticate');
+Route::get('head/dashboard', [UserController::class,'headDashboard'])->name('head.dashboard');
+
 Route::group(['prefix'=> 'admin'], function () 
 {
     Route::group(['middleware'=>'admin.guest'], function(){
@@ -62,6 +69,8 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::resource('court-appointments', CourtAppointmentController::class);
 
         //Medical Appointment Routes
-        Route::resource('medical-appointments', CourtAppointmentController::class);
+        Route::resource('medical-appointments', MedicalAppointmentController::class);
+        //Logs Routes
+        Route::resource('logs', LogController::class);
     });
 });

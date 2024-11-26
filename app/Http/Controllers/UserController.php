@@ -126,4 +126,25 @@ class UserController extends Controller
         $data->update();
         return redirect()->route('users.archives')->with('success', 'Record restored successfully!');
     }
+
+    public function headIndex(){
+        return view('head.login');
+    }
+    public function headAuthenticate(Request $request){
+        if(Auth::attempt(['email' => $request->email,'password'=> $request->password]))
+        {
+            if(Auth::user()->role != 'head')
+            {
+                Auth::logout();
+                return redirect()->route('head.login')->with('error','Unauthorized user. Access denied!');
+            }
+            return redirect()->route('head.dashboard');
+        } else {
+            return redirect()->route('head.login')->with('error', 'Something went wrong');
+        }
+    }
+
+    public function headDashboard(){
+        return route('head.dashboard');
+    }
 }

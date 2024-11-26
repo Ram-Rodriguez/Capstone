@@ -26,7 +26,7 @@ class MedicalAppointmentController extends Controller
      */
     public function create()
     {
-        $data['children'] = MedicalAppointment::all();
+        $data['children'] = Children::all();
         return view('admin.medical-appointments.create', $data);
     }
 
