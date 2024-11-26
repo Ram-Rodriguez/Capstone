@@ -12,12 +12,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Children Record List</h1>
+          <h1>Children Record Archives</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Children Record List</li>
+            <li class="breadcrumb-item active">Archived Records</li>
           </ol>
         </div>
       </div>
@@ -33,7 +33,7 @@
                 <div class="alert alert-success">{{ Session::get('success') }}</div>
             @endif
             <div class="card-header">
-              <h3 class="card-title">Children Records</h3>
+              <h3 class="card-title">Records</h3>
             </div>
 
             <div class="card-body">
@@ -44,8 +44,7 @@
                     <th>Full Name</th>
                     <th>Group</th>
                     <th>Date of Admission</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th>Unarchive</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -55,17 +54,16 @@
                     <td>{{ $item->first_name }} {{ $item->lastname }}</td>
                     <td>{{ $item->childrenGroup?->name }}</td>
                     <td>{{ $item->doa }}</td>
-                    <td><a href="{{ route('children.edit', $item->id) }}" class="btn btn-primary">Edit</a></td>
-                    <form action="{{ route('children.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to archive this record? You may unarchive this in the archived records page.')">
+                    <form action="{{ route('children.unarchive', $item->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to restore this record? You may view this in the records page.')">
                     @csrf
                     @method('PUT')
                         <input type="hidden" name="id" value="{{ $item->id }}"/>
-                        <td><button type="submit" class="btn btn-danger">Archive</button></td>
+                        <td><button type="submit" class="btn btn-danger">Unarchive</button></td>
                     </form>
                   </tr>
                   @empty
                     <tr>
-                        <th>There are no child records</th>
+                        <th>There are no archived records</th>
                     </tr>
                   @endforelse
               </table>

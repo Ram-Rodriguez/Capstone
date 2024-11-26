@@ -3,7 +3,9 @@
 use App\Http\Controllers\ChildrenGroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChildrenController;
+use App\Http\Controllers\CourtAppointmentController;
 
 Route::get('/', function () {
     return view('admin.login');
@@ -22,6 +24,13 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::get('form', [AdminController::class, 'form'])->name('admin.form');
         Route::get('table', [AdminController::class, 'table'])->name('admin.table');
 
+        //User Routes
+        Route::get('users/archives' , [UserController::class, 'archives'])->name('users.archives');
+        Route::put('users/archive/{id}' , [UserController::class, 'archive'])->name('users.archive');
+        Route::put('users/unarchive/{id}' , [UserController::class, 'unarchive'])->name('users.unarchive');
+        Route::resource('users', UserController::class);
+        Route::get('users' , [UserController::class, 'read'])->name('users.read');
+
         //Children Group Routes
         Route::get('children-group/create', [ChildrenGroupController::class, 'index'])->name('children-group.create');
         Route::post('children-group/store', [ChildrenGroupController::class, 'store'])->name('children-group.store');
@@ -37,6 +46,7 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::put('children/update/{id}', [ChildrenController::class, 'update'])->name('children.update');
         Route::put('children/archive/{id}', [ChildrenController::class, 'archive'])->name('children.archive');
         Route::get('children/read', [ChildrenController::class, 'read'])->name('children.read');
+        Route::get('children/archives', [ChildrenController::class, 'archives'])->name('children.archives');
         Route::get('children/read/download/csf/{id}', [ChildrenController::class, 'downloadCsf'])->name('download.csf');
         Route::get('children/read/download/poe/{id}', [ChildrenController::class, 'downloadPoe'])->name('download.poe');
         Route::get('children/read/download/cof/{id}', [ChildrenController::class, 'downloadCof'])->name('download.cof');
@@ -46,5 +56,12 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::get('children/read/download/ap/{id}', [ChildrenController::class, 'downloadAdmissionPhoto'])->name('download.admission_photo');
         Route::get('children/read/download/lp/{id}', [ChildrenController::class, 'downloadLatestPhoto'])->name('download.latest_photo');
         Route::put('children/archive/{id}', [ChildrenController::class, 'destroy'])->name('children.destroy');
+        Route::put('children/unarchive/{id}', [ChildrenController::class, 'unarchive'])->name('children.unarchive');
+
+        //Court Appointment Routes
+        Route::resource('court-appointments', CourtAppointmentController::class);
+
+        //Medical Appointment Routes
+        Route::resource('medical-appointments', CourtAppointmentController::class);
     });
 });

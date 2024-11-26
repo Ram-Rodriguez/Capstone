@@ -278,8 +278,18 @@ class ChildrenController extends Controller
         return redirect()->route('children.read')->with('status', 'Record archived successfully!');
     }
 
-    public function archive(Children $children){
-        
+    public function archives(){
+        $query = Children::with(['childrenGroup'])->where('is_archived', '=', '1')->latest('id')->get();
+        $data['children'] = $query;
+        return view('admin.children.children-archives', $data);
+    }
+
+    public function unarchive(Request $request)
+    {
+        $data = Children::find($request->id);
+        $data->is_archived = 0;
+        $data->update();
+        return redirect()->route('children.archives')->with('status', 'Record restored successfully!');
     }
 
     public function downloadCsf($id)
