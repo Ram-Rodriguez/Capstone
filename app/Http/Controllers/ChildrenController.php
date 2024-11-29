@@ -16,7 +16,14 @@ class ChildrenController extends Controller
     public function index()
     {
         $data['children_groups'] = ChildrenGroup::all();
+
         return view('admin.children.children', $data);
+    }
+    public function headIndex()
+    {
+        $data['children_groups'] = ChildrenGroup::all();
+
+        return view('head.children.create', $data);
     }
 
     /**
@@ -25,6 +32,89 @@ class ChildrenController extends Controller
     public function create()
     {
         // return view('admin.children.children');
+    }
+
+    public function headStore(Request $request){
+        $request->validate([
+            'children_group_id' => 'integer|nullable',
+            'doa' => 'date|nullable',
+            'is_foundling' => 'nullable',
+            'first_name' => 'string|nullable',
+            'middle_name' => 'string|nullable',
+            'lastname' => 'string|nullable',
+            'blood_type' => 'string|nullable',
+            'age' => 'integer|nullable',
+            'height' => 'decimal:1,4|nullable',
+            'weight' => 'decimal:1,4|nullable',
+            'dob' => 'date|nullable',
+            'father_name' => 'string|nullable',
+            'mother_name' => 'string|nullable',
+            'guardian_name' => 'string|nullable',
+            'csf' => ['file', 'nullable'],
+            'poe' => ['file', 'nullable'],
+            'cof' => ['file', 'nullable'],
+            'cola' => ['file', 'nullable'],
+            'cfsc' => ['file', 'nullable'],
+            'bc' => ['file', 'nullable'],
+            'admission_photo' => ['image', 'nullable'],
+            'latest_photo' => ['image', 'nullable']
+        ]);
+
+        if($request->hasFile('csf')){
+            $csf = $request->file('csf')->store(options:'s3');
+        }
+
+        if($request->hasFile('poe')){
+            $poe = $request->file('poe');
+        }
+
+        if($request->hasFile('cof')){
+            $cof = $request->file('cof')->store(options:'s3');
+        }
+
+        if($request->hasFile('cola')){
+            $cola = $request->file('cola')->store(options:'s3');
+        }
+
+        if($request->hasFile('cfsc')){
+            $cfsc = $request->file('cfsc')->store(options:'s3');        }
+
+        if($request->hasFile('bc')){
+            $bc = $request->file('bc')->store(options:'s3');        }
+
+        if($request->hasFile('admission_photo')){
+            $admission_photo = $request->file('admission_photo')->store(options:'s3');        }
+
+        if($request->hasFile('latest_photo')){
+            $latest_photo = $request->file('latest_photo')->store(options:'s3');        }
+
+            Children::create([
+                'children_group_id' => $request->children_group_id,
+                'doa' => $request->doa,
+                'is_foundling' => $request->is_foundling,
+                'first_name' => $request->first_name,
+                'middle_name' => $request->middle_name,
+                'lastname' => $request->lastname,
+                'blood_type' => $request->blood_type,
+                'age' => $request->age,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'dob' => $request->dob,
+                'father_name' => $request->father_name,
+                'mother_name' => $request->mother_name,
+                'guardian_name' => $request->guardian_name,
+                'csf' => $csf ??= null,
+                'poe' => $poe ??= null,
+                'cof' => $cof ??= null,
+                'cola' => $cola ??= null,
+                'cfsc' => $cfsc ??= null,
+                'bc' => $bc ??= null,
+                'admission_photo' => $admission_photo ??= null,
+                'latest_photo' => $latest_photo ??= null
+            ]);
+
+            return redirect()->route('head.children.create')->with('success', 'Record added successfully');
+
     }
 
     /**
@@ -143,13 +233,20 @@ class ChildrenController extends Controller
         $data['children'] = $query;
         return view('admin.children.children-list', $data);
     }
+    public function headRead(){
+        $query = Children::with(['childrenGroup'])->where('is_archived', '=', '0')->latest('id')->get();
+        $data['children'] = $query;
+        return view('head.children.list', $data);
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(Children $children)
+    public function headShow($id)
     {
-        //
+        $child = DB::table('childrens')->where('id','=', $id)->first();
+        $children_groups = ChildrenGroup::all();
+        return view('head.children.show')->with('children_groups', $children_groups)->with('child', $child);
     }
 
     /**
@@ -160,6 +257,12 @@ class ChildrenController extends Controller
         $children = DB::table('childrens')->where('id','=', $id)->first();
         $children_groups = ChildrenGroup::all();
         return view('admin.children.edit-children')->with('children_groups', $children_groups)->with('children', $children);
+    }
+    public function headEdit($id)
+    {
+        $children = DB::table('childrens')->where('id','=', $id)->first();
+        $children_groups = ChildrenGroup::all();
+        return view('head.children.edit')->with('children_groups', $children_groups)->with('children', $children);
     }
 
     /**
@@ -195,58 +298,74 @@ class ChildrenController extends Controller
 
         if($request->hasFile('csf')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete($child->csf);
+            if($child->csf != null) {
+                Storage::disk('s3')->delete($child->csf);
+            }
             $csf = $request->file('csf')->store(options:'s3');
             $data->csf = $csf;
         }
 
         if($request->hasFile('poe')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete($child->poe);
+            if($child->poe != null) {
+                Storage::disk('s3')->delete($child->poe);
+            }
             $poe = $request->file('poe')->store(options:'s3');
             $data->poe = $poe;
         }
 
         if($request->hasFile('cof')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete(paths: $child->cof);
+            if($child->cof != null) {
+                Storage::disk('s3')->delete(paths: $child->cof);
+            }
             $cof = $request->file('cof')->store(options:'s3');
             $data->cof = $cof;
         }
 
         if($request->hasFile('cola')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete(paths: $child->cola);
+            if($child->cola != null) {
+                Storage::disk('s3')->delete(paths: $child->cola);
+            }
             $cola = $request->file('cola')->store(options:'s3');
             $data->cola = $cola;
         }
 
         if($request->hasFile('cfsc')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete($child->cfsc);
-            $cfsc = $request->file('cfsc')->store(options:'s3');        
+            if($child->cfsc != null) {
+                Storage::disk('s3')->delete($child->cfsc);
+            }
+            $cfsc = $request->file('cfsc')->store(options:'s3');
             $data->cfsc = $cfsc;
         }
 
         if($request->hasFile('bc')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete($child->bc);
-            $bc = $request->file('bc')->store(options:'s3');        
+            if($child->bc != null) {
+                Storage::disk('s3')->delete($child->bc);
+            }
+            $bc = $request->file('bc')->store(options:'s3');
             $data->bc = $bc;
         }
 
         if($request->hasFile('admission_photo')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete($child->admission_photo);
-            $admission_photo = $request->file('admission_photo')->store(options:'s3');  
-            $data->admission_photo = $admission_photo;   
+            if($child->admission_photo != null) {
+                Storage::disk('s3')->delete($child->admission_photo);
+            }
+            $admission_photo = $request->file('admission_photo')->store(options:'s3');
+            $data->admission_photo = $admission_photo;
         }
 
         if($request->hasFile('latest_photo')){
             $child = Children::findOrFail($request->id);
-            Storage::disk('s3')->delete($child->latest_photo);
-            $latest_photo = $request->file('latest_photo')->store(options:'s3');  
-            $data->latest_photo = $latest_photo;      
+            if($child->latest_photo != null) {
+                Storage::disk('s3')->delete($child->latest_photo);
+            }
+            $latest_photo = $request->file('latest_photo')->store(options:'s3');
+            $data->latest_photo = $latest_photo;
         }
 
         $data->children_group_id = $request->children_group_id;
@@ -267,6 +386,124 @@ class ChildrenController extends Controller
         return redirect()->route('children.read')->with('success', 'Record updated successfully');
     }
 
+    public function headUpdate(Request $request){
+        $data = Children::find($request->id);
+        $request->validate([
+            'children_group_id' => 'integer|nullable',
+            'doa' => 'date|nullable',
+            'is_foundling' => 'nullable',
+            'first_name' => 'string|nullable',
+            'middle_name' => 'string|nullable',
+            'lastname' => 'string|nullable',
+            'blood_type' => 'string|nullable',
+            'age' => 'integer|nullable',
+            'height' => 'decimal:1,4|nullable',
+            'weight' => 'decimal:1,4|nullable',
+            'dob' => 'date|nullable',
+            'father_name' => 'string|nullable',
+            'mother_name' => 'string|nullable',
+            'guardian_name' => 'string|nullable',
+            'csf' => ['file', 'nullable'],
+            'poe' => ['file', 'nullable'],
+            'cof' => ['file', 'nullable'],
+            'cola' => ['file', 'nullable'],
+            'cfsc' => ['file', 'nullable'],
+            'bc' => ['file', 'nullable'],
+            'admission_photo' => ['image', 'nullable'],
+            'latest_photo' => ['image', 'nullable']
+        ]);
+
+        if($request->hasFile('csf')){
+            $child = Children::findOrFail($request->id);
+            if($child->csf != null) {
+                Storage::disk('s3')->delete($child->csf);
+            }
+            $csf = $request->file('csf')->store(options:'s3');
+            $data->csf = $csf;
+        }
+
+        if($request->hasFile('poe')){
+            $child = Children::findOrFail($request->id);
+            if($child->poe != null) {
+                Storage::disk('s3')->delete($child->poe);
+            }
+            $poe = $request->file('poe')->store(options:'s3');
+            $data->poe = $poe;
+        }
+
+        if($request->hasFile('cof')){
+            $child = Children::findOrFail($request->id);
+            if($child->cof != null) {
+                Storage::disk('s3')->delete(paths: $child->cof);
+            }
+            $cof = $request->file('cof')->store(options:'s3');
+            $data->cof = $cof;
+        }
+
+        if($request->hasFile('cola')){
+            $child = Children::findOrFail($request->id);
+            if($child->cola != null) {
+                Storage::disk('s3')->delete(paths: $child->cola);
+            }
+            $cola = $request->file('cola')->store(options:'s3');
+            $data->cola = $cola;
+        }
+
+        if($request->hasFile('cfsc')){
+            $child = Children::findOrFail($request->id);
+            if($child->cfsc != null) {
+                Storage::disk('s3')->delete($child->cfsc);
+            }
+            $cfsc = $request->file('cfsc')->store(options:'s3');
+            $data->cfsc = $cfsc;
+        }
+
+        if($request->hasFile('bc')){
+            $child = Children::findOrFail($request->id);
+            if($child->bc != null) {
+                Storage::disk('s3')->delete($child->bc);
+            }
+            $bc = $request->file('bc')->store(options:'s3');
+            $data->bc = $bc;
+        }
+
+        if($request->hasFile('admission_photo')){
+            $child = Children::findOrFail($request->id);
+            if($child->admission_photo != null) {
+                Storage::disk('s3')->delete($child->admission_photo);
+            }
+            $admission_photo = $request->file('admission_photo')->store(options:'s3');
+            $data->admission_photo = $admission_photo;
+        }
+
+        if($request->hasFile('latest_photo')){
+            $child = Children::findOrFail($request->id);
+            if($child->latest_photo != null) {
+                Storage::disk('s3')->delete($child->latest_photo);
+            }
+            $latest_photo = $request->file('latest_photo')->store(options:'s3');
+            $data->latest_photo = $latest_photo;
+        }
+
+        $data->children_group_id = $request->children_group_id;
+        $data->doa = $request->doa;
+        $data->is_foundling = $request->is_foundling;
+        $data->first_name = $request->first_name;
+        $data->middle_name = $request->middle_name;
+        $data->lastname = $request->lastname;
+        $data->blood_type = $request->blood_type;
+        $data->age = $request->age;
+        $data->height = $request->height;
+        $data->weight = $request->weight;
+        $data->dob = $request->dob;
+        $data->father_name = $request->father_name;
+        $data->mother_name = $request->mother_name;
+        $data->guardian_name = $request->guardian_name;
+        $data->update();
+        return redirect()->route('head.children.read')->with('success', 'Record updated successfully');
+
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -275,7 +512,14 @@ class ChildrenController extends Controller
         $data = Children::find($request->id);
         $data->is_archived = 1;
         $data->update();
-        return redirect()->route('children.read')->with('status', 'Record archived successfully!');
+        return redirect()->route('children.read')->with('success', 'Record archived successfully!');
+    }
+    public function headDestroy(Request $request)
+    {
+        $data = Children::find($request->id);
+        $data->is_archived = 1;
+        $data->update();
+        return redirect()->route('head.children.read')->with('success', 'Record archived successfully!');
     }
 
     public function archives(){
@@ -283,13 +527,25 @@ class ChildrenController extends Controller
         $data['children'] = $query;
         return view('admin.children.children-archives', $data);
     }
+    public function headArchives(){
+        $query = Children::with(['childrenGroup'])->where('is_archived', '=', '1')->latest('id')->get();
+        $data['children'] = $query;
+        return view('head.children.archives', $data);
+    }
 
     public function unarchive(Request $request)
     {
         $data = Children::find($request->id);
         $data->is_archived = 0;
         $data->update();
-        return redirect()->route('children.archives')->with('status', 'Record restored successfully!');
+        return redirect()->route('children.archives')->with('success', 'Record restored successfully!');
+    }
+    public function headUnarchive(Request $request)
+    {
+        $data = Children::find($request->id);
+        $data->is_archived = 0;
+        $data->update();
+        return redirect()->route('head.children.archives')->with('success', 'Record restored successfully!');
     }
 
     public function downloadCsf($id)

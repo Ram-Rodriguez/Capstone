@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Building-Bridges</title>
+  <title>@yield('title') - Building-Bridges</title>
   <base href="{{asset('admincss')}}/" />
 
   <link rel="stylesheet"
@@ -44,10 +44,10 @@
       </ul>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.change-password') }}" role="button">Account Settings<i class="fas fa-right-from-bracket"></i></a>
+          <a class="nav-link" href="{{ route('head.change-password') }}" role="button">Account Settings<i class="fas fa-right-from-bracket"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.logout') }}" role="button">Log out<i class="fas fa-right-from-bracket"></i></a>
+          <a class="nav-link" href="{{ route('head.logout') }}" role="button">Log out<i class="fas fa-right-from-bracket"></i></a>
         </li>
       </ul>
     </nav>
@@ -77,41 +77,12 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
             <li class="nav-item">
-              <a href="{{ route('admin.dashboard') }}" class="nav-link">
+              <a href="{{ route('head.dashboard') }}" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Dashboard
                 </p>
               </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                  Users
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{ route('users.create') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Add User</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('users.read') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>View Users</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('users.archives') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Archived Users</p>
-                    </a>
-                </li>
-              </ul>
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
@@ -123,13 +94,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('children-group.create') }}" class="nav-link">
+                    <a href="{{ route('head.children-group.create') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Add Group</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('children-group.read') }}" class="nav-link">
+                    <a href="{{ route('head.children-group.read') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>View Groups</p>
                     </a>
@@ -146,19 +117,19 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('children.create') }}" class="nav-link">
+                    <a href="{{ route('head.children.create') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Add Record</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('children.read') }}" class="nav-link">
+                    <a href="{{ route('head.children.read') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>View Records</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('children.archives') }}" class="nav-link">
+                    <a href="{{ route('head.children.archives') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>View Archives</p>
                     </a>
@@ -175,36 +146,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{ route('court-appointments.create') }}" class="nav-link">
+                    <a href="{{ route('head.appointments.create') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Add Appointment</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('court-appointments.index') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>View Appointments</p>
-                    </a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                  Medical Appointments
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{ route('medical-appointments.create') }}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Add Appointment</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('medical-appointments.index') }}" class="nav-link">
+                    <a href="{{ route('head.appointments.read') }}" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
                         <p>View Appointments</p>
                     </a>

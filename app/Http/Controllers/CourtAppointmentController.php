@@ -24,6 +24,15 @@ class CourtAppointmentController extends Controller
         // if(Auth::check()) { $user = Auth::user()->id; } else { $user = Auth::user(); }
         // dd(Auth::check());
     }
+    public function headAread()
+    {
+        $query = CourtAppointment::with(['children', 'employee'])->latest('id')->get();
+        $data['appointments'] = $query;
+        return view('head.court-appointments.list', $data);
+        // $user = Auth::user();
+        // if(Auth::check()) { $user = Auth::user()->id; } else { $user = Auth::user(); }
+        // dd(Auth::check());
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -32,6 +41,11 @@ class CourtAppointmentController extends Controller
     {
         $data['children'] = Children::all();
         return view('admin.court-appointments.create', $data);
+    }
+    public function headAindex()
+    {
+        $data['children'] = Children::all();
+        return view('head.court-appointments.create', $data);
     }
 
     /**
@@ -72,11 +86,50 @@ class CourtAppointmentController extends Controller
 
         return redirect()->route('court-appointments.create')->with('success', 'Appointment created successfully!');
     }
+    public function headAstore(Request $request)
+    {
+        $request->validate([
+            'appointment_date' => 'required',
+            'child_id' => 'nullable',
+            'employee_id' => 'nullable',
+            'title' => 'string|required',
+            'details' => 'string|nullable',
+            'csf' => 'nullable',
+            'poe' => 'nullable',
+            'cola' => 'nullable',
+            'cfsc' => 'nullable',
+            'bc' => 'nullable',
+            'admission_photo' => 'nullable',
+            'latest_photo' => 'nullable',
+        ]);
+
+        $appointment = new CourtAppointment();
+        $appointment->appointment_date = $request->appointment_date;
+        $appointment->child_id = $request->child_id;
+        // $appointment->employee_id = $request->user()->id;
+        $appointment->title = $request->title;
+        $appointment->details = $request->details;
+        $appointment->csf = $request->csf;
+        $appointment->poe = $request->poe;
+        $appointment->cof = $request->cof;
+        $appointment->cola = $request->cola;
+        $appointment->cfsc = $request->cfsc;
+        $appointment->bc = $request->bc;
+        $appointment->admission_photo = $request->admission_photo;
+        $appointment->latest_photo = $request->latest_photo;
+        $appointment->save();
+
+        return redirect()->route('head.appointments.create')->with('success', 'Appointment created successfully!');
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(CourtAppointment $courtAppointment)
+    {
+        //
+    }
+    public function headAshow(CourtAppointment $courtAppointment)
     {
         //
     }
@@ -89,6 +142,13 @@ class CourtAppointmentController extends Controller
         $data['appointment'] = CourtAppointment::find($id);
         $data['children'] = Children::all();
         return view('admin.court-appointments.edit', $data);
+
+    }
+    public function headAedit(string $id)
+    {
+        $data['appointment'] = CourtAppointment::find($id);
+        $data['children'] = Children::all();
+        return view('head.court-appointments.edit', $data);
 
     }
 
@@ -131,6 +191,42 @@ class CourtAppointmentController extends Controller
         return redirect()->route('court-appointments.index')->with('success', 'Appointment updated successfully!');
 
     }
+    public function headAupdate(Request $request)
+    {
+        $request->validate([
+            'appointment_date' => 'required',
+            'child_id' => 'nullable',
+            'employee_id' => 'nullable',
+            'title' => 'string|required',
+            'details' => 'string|nullable',
+            'csf' => 'nullable',
+            'poe' => 'nullable',
+            'cola' => 'nullable',
+            'cfsc' => 'nullable',
+            'bc' => 'nullable',
+            'admission_photo' => 'nullable',
+            'latest_photo' => 'nullable',
+        ]);
+
+        $appointment = CourtAppointment::find($request->id);
+        $appointment->appointment_date = $request->appointment_date;
+        $appointment->child_id = $request->child_id;
+        // $appointment->employee_id = $request->user()->id;
+        $appointment->title = $request->title;
+        $appointment->details = $request->details;
+        $appointment->csf = $request->csf;
+        $appointment->poe = $request->poe;
+        $appointment->cof = $request->cof;
+        $appointment->cola = $request->cola;
+        $appointment->cfsc = $request->cfsc;
+        $appointment->bc = $request->bc;
+        $appointment->admission_photo = $request->admission_photo;
+        $appointment->latest_photo = $request->latest_photo;
+        $appointment->update();
+
+        return redirect()->route('head.appointments.read')->with('success', 'Appointment updated successfully!');
+
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -141,5 +237,12 @@ class CourtAppointmentController extends Controller
         $appointment->delete();
 
         return redirect()->route('court-appointments.index')->with('success', 'Appointment deleted successfully');
+    }
+    public function headAdelete(Request $request)
+    {
+        $appointment = CourtAppointment::find($request->id);
+        $appointment->delete();
+
+        return redirect()->route('head.appointments.read')->with('success', 'Appointment deleted successfully');
     }
 }

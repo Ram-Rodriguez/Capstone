@@ -13,7 +13,7 @@ class MedicalAppointmentController extends Controller
      */
     public function index()
     {
-        $query = MedicalAppointment::with(['children'])->latest('id')->get();
+        $query = MedicalAppointment::with(['children'])->latest('created_at')->get();
         $data['appointments'] = $query;
         return view('admin.medical-appointments.appointments', $data);
         // $user = Auth::user();

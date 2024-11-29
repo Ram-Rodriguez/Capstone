@@ -1,4 +1,4 @@
-@extends('admin.layout')
+@extends('head.layout')
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="">Home</a></li>
+                        <li class="breadcrumb-item"><a href="head.children.read">Children Records</a></li>
                         <li class="breadcrumb-item active">Create Log</li>
                     </ol>
                 </div>
@@ -32,18 +32,13 @@
                             <h3 class="card-title">Log Creation Form</h3>
                         </div>
 
-                        <form action="{{ route('logs.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('head.logs.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                              <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label>Child Record</label>
-                                        <select name="child_id" class="form-control">
-                                            <option value="" disabled selected>Select record</option>
-                                            @foreach ($children as $item)
-                                            <option value="{{ $item->id }}">{{ $item->id }} {{ $item->first_name }} {{ $item->last_name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <label>Child Record: </label>
+                                        <input type="text" class="form-control"  name="child_id" value="{{$child->id}}" readonly></input>
                                         @error('child_id')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror

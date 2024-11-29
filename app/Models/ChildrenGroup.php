@@ -9,6 +9,12 @@ class ChildrenGroup extends Model
 {
     use HasFactory  ;
     protected $fillable = [
+        'employee_id',
         'name',
     ] ;
+
+    public function employee()
+    {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
 }

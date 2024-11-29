@@ -9,20 +9,138 @@ use App\Http\Controllers\CourtAppointmentController;
 use App\Http\Controllers\MedicalAppointmentController;
 use App\Http\Controllers\LogController;
 
-Route::get('/', function () {
-    return view('admin.login');
+// Route::get('/', function () {
+//     return view('head.login');
+// });
+Route::group(['prefix'=>'staff'], function(){
+    Route::group(['middleware'=>'staff.guest'], function(){
+        Route::get('login', [UserController::class,'staffIndex'])->name('staff.login');
+        Route::post('authenticate', [UserController::class,'staffAuthenticate'])->name('staff.authenticate');
+        // Route::get('login/redirect', function() {
+        //     return redirect(route('staff.login'));
+        // })->name('login');
+    });
+    Route::group(['middleware'=>'auth'], function(){
+        Route::get('dashboard', [UserController::class,'staffDashboard'])->name('staff.dashboard');
+        Route::get('logout', [UserController::class,'staffLogout'])->name('staff.logout');
+        Route::get('change-password', [UserController::class, 'changePassword'])->name('staff.change-password');
+        Route::post('update-password', [UserController::class, 'updatePassword'])->name('staff.update-password');
+
+        //Children Group Routes
+        Route::get('children-group/create', [ChildrenGroupController::class, 'headCGindex'])->name('head.children-group.create');
+        Route::post('children-group/store', [ChildrenGroupController::class, 'headCGstore'])->name('head.children-group.store');
+        Route::get('children-group/read', [ChildrenGroupController::class, 'headCGread'])->name('head.children-group.read');
+        Route::get('children-group/delete/{id}', [ChildrenGroupController::class, 'headCGdelete'])->name('head.children-group.delete');
+        Route::get('children-group/edit/{id}', [ChildrenGroupController::class, 'headCGedit'])->name('head.children-group.edit');
+        Route::get('children-group/show/{id}', [ChildrenGroupController::class, 'show'])->name('head.children-group.show');
+        Route::put('children-group/update/{id}', [ChildrenGroupController::class, 'headCGupdate'])->name('head.children-group.update');
+
+         //Children Routes
+         Route::get('children/create', [ChildrenController::class, 'headIndex'])->name('head.children.create');
+         Route::post('children/store', [ChildrenController::class, 'headStore'])->name('head.children.store');
+         Route::get('children/edit/{id}', [ChildrenController::class, 'headEdit'])->name('head.children.edit');
+         Route::get('children/show/{id}', [ChildrenController::class, 'headShow'])->name('head.children.show');
+         Route::put('children/update/{id}', [ChildrenController::class, 'headUpdate'])->name('head.children.update');
+         Route::put('children/archive/{id}', [ChildrenController::class, 'headArchive'])->name('head.children.archive');
+         Route::get('children/read', [ChildrenController::class, 'headRead'])->name('head.children.read');
+         Route::get('children/archives', [ChildrenController::class, 'headArchives'])->name('head.children.archives');
+         Route::get('children/read/download/csf/{id}', [ChildrenController::class, 'downloadCsf'])->name('head.download.csf');
+         Route::get('children/read/download/poe/{id}', [ChildrenController::class, 'downloadPoe'])->name('head.download.poe');
+         Route::get('children/read/download/cof/{id}', [ChildrenController::class, 'downloadCof'])->name('head.download.cof');
+         Route::get('children/read/download/cola/{id}', [ChildrenController::class, 'downloadCola'])->name('head.download.cola');
+         Route::get('children/read/download/cfsc/{id}', [ChildrenController::class, 'downloadCfsc'])->name('head.download.cfsc');
+         Route::get('children/read/download/bc/{id}', [ChildrenController::class, 'downloadBc'])->name('head.download.bc');
+         Route::get('children/read/download/ap/{id}', [ChildrenController::class, 'downloadAdmissionPhoto'])->name('head.download.admission_photo');
+         Route::get('children/read/download/lp/{id}', [ChildrenController::class, 'downloadLatestPhoto'])->name('head.download.latest_photo');
+         Route::put('children/archive/{id}', [ChildrenController::class, 'headDestroy'])->name('head.children.destroy');
+         Route::put('children/unarchive/{id}', [ChildrenController::class, 'headUnarchive'])->name('head.children.unarchive');
+
+        //Court Appointment Routes
+        Route::get('appointments/create', [CourtAppointmentController::class, 'headAindex'])->name('head.appointments.create');
+        Route::post('appointments/store', [CourtAppointmentController::class, 'headAstore'])->name('head.appointments.store');
+        Route::get('appointments/read', [CourtAppointmentController::class, 'headAread'])->name('head.appointments.read');
+        Route::put('appointments/delete/{id}', [CourtAppointmentController::class, 'headAdelete'])->name('head.appointments.destroy');
+        Route::get('appointments/edit/{id}', [CourtAppointmentController::class, 'headAedit'])->name('head.appointments.edit');
+        Route::get('appointments/show/{id}', [CourtAppointmentController::class, 'headAshow'])->name('head.appointments.show');
+        Route::put('appointments/update/{id}', [CourtAppointmentController::class, 'headAupdate'])->name('head.appointments.update');
+
+        //Logs Routes
+        Route::get('logs/{id}/create', [LogController::class, 'headLcreate'])->name('head.logs.create');
+        Route::post('logs/store', [LogController::class, 'headLstore'])->name('head.logs.store');
+        Route::get('logs/{id}/list', [LogController::class, 'headLindex'])->name('head.logs.index');
+        Route::delete('logs/delete/{id}', [LogController::class, 'headLdelete'])->name('head.logs.delete');
+        Route::get('logs/edit/{id}', [LogController::class, 'headLedit'])->name('head.logs.edit');
+        Route::put('logs/update/{id}', [LogController::class, 'headLupdate'])->name('head.logs.update');
+    });
 });
 
-Route::get('head/login', [UserController::class,'headIndex'])->name('head.login');
-Route::post('head/authenticate', [UserController::class,'headAuthenticate'])->name('head.authenticate');
-Route::get('head/dashboard', [UserController::class,'headDashboard'])->name('head.dashboard');
+Route::group(['prefix'=>'head'], function(){
+    Route::group(['middleware'=>'guest'], function(){
+        Route::get('login', [UserController::class,'headIndex'])->name('head.login');
+        Route::post('authenticate', [UserController::class,'headAuthenticate'])->name('head.authenticate');
+        Route::get('login/redirect', function() {
+            return redirect(route('head.login'));
+        })->name('login');
+    });
+    Route::group(['middleware'=>'auth'], function(){
+        Route::get('dashboard', [UserController::class,'headDashboard'])->name('head.dashboard');
+        Route::get('logout', [UserController::class,'headLogout'])->name('head.logout');
+        Route::get('change-password', [UserController::class, 'changePassword'])->name('head.change-password');
+        Route::post('update-password', [UserController::class, 'updatePassword'])->name('head.update-password');
 
-Route::group(['prefix'=> 'admin'], function () 
+        //Children Group Routes
+        Route::get('children-group/create', [ChildrenGroupController::class, 'headCGindex'])->name('head.children-group.create');
+        Route::post('children-group/store', [ChildrenGroupController::class, 'headCGstore'])->name('head.children-group.store');
+        Route::get('children-group/read', [ChildrenGroupController::class, 'headCGread'])->name('head.children-group.read');
+        Route::get('children-group/delete/{id}', [ChildrenGroupController::class, 'headCGdelete'])->name('head.children-group.delete');
+        Route::get('children-group/edit/{id}', [ChildrenGroupController::class, 'headCGedit'])->name('head.children-group.edit');
+        Route::get('children-group/show/{id}', [ChildrenGroupController::class, 'show'])->name('head.children-group.show');
+        Route::put('children-group/update/{id}', [ChildrenGroupController::class, 'headCGupdate'])->name('head.children-group.update');
+
+         //Children Routes
+         Route::get('children/create', [ChildrenController::class, 'headIndex'])->name('head.children.create');
+         Route::post('children/store', [ChildrenController::class, 'headStore'])->name('head.children.store');
+         Route::get('children/edit/{id}', [ChildrenController::class, 'headEdit'])->name('head.children.edit');
+         Route::get('children/show/{id}', [ChildrenController::class, 'headShow'])->name('head.children.show');
+         Route::put('children/update/{id}', [ChildrenController::class, 'headUpdate'])->name('head.children.update');
+         Route::put('children/archive/{id}', [ChildrenController::class, 'headArchive'])->name('head.children.archive');
+         Route::get('children/read', [ChildrenController::class, 'headRead'])->name('head.children.read');
+         Route::get('children/archives', [ChildrenController::class, 'headArchives'])->name('head.children.archives');
+         Route::get('children/read/download/csf/{id}', [ChildrenController::class, 'downloadCsf'])->name('head.download.csf');
+         Route::get('children/read/download/poe/{id}', [ChildrenController::class, 'downloadPoe'])->name('head.download.poe');
+         Route::get('children/read/download/cof/{id}', [ChildrenController::class, 'downloadCof'])->name('head.download.cof');
+         Route::get('children/read/download/cola/{id}', [ChildrenController::class, 'downloadCola'])->name('head.download.cola');
+         Route::get('children/read/download/cfsc/{id}', [ChildrenController::class, 'downloadCfsc'])->name('head.download.cfsc');
+         Route::get('children/read/download/bc/{id}', [ChildrenController::class, 'downloadBc'])->name('head.download.bc');
+         Route::get('children/read/download/ap/{id}', [ChildrenController::class, 'downloadAdmissionPhoto'])->name('head.download.admission_photo');
+         Route::get('children/read/download/lp/{id}', [ChildrenController::class, 'downloadLatestPhoto'])->name('head.download.latest_photo');
+         Route::put('children/archive/{id}', [ChildrenController::class, 'headDestroy'])->name('head.children.destroy');
+         Route::put('children/unarchive/{id}', [ChildrenController::class, 'headUnarchive'])->name('head.children.unarchive');
+
+        //Court Appointment Routes
+        Route::get('appointments/create', [CourtAppointmentController::class, 'headAindex'])->name('head.appointments.create');
+        Route::post('appointments/store', [CourtAppointmentController::class, 'headAstore'])->name('head.appointments.store');
+        Route::get('appointments/read', [CourtAppointmentController::class, 'headAread'])->name('head.appointments.read');
+        Route::put('appointments/delete/{id}', [CourtAppointmentController::class, 'headAdelete'])->name('head.appointments.destroy');
+        Route::get('appointments/edit/{id}', [CourtAppointmentController::class, 'headAedit'])->name('head.appointments.edit');
+        Route::get('appointments/show/{id}', [CourtAppointmentController::class, 'headAshow'])->name('head.appointments.show');
+        Route::put('appointments/update/{id}', [CourtAppointmentController::class, 'headAupdate'])->name('head.appointments.update');
+
+        //Logs Routes
+        Route::get('logs/{id}/create', [LogController::class, 'headLcreate'])->name('head.logs.create');
+        Route::post('logs/store', [LogController::class, 'headLstore'])->name('head.logs.store');
+        Route::get('logs/{id}/list', [LogController::class, 'headLindex'])->name('head.logs.index');
+        Route::delete('logs/delete/{id}', [LogController::class, 'headLdelete'])->name('head.logs.delete');
+        Route::get('logs/edit/{id}', [LogController::class, 'headLedit'])->name('head.logs.edit');
+        Route::put('logs/update/{id}', [LogController::class, 'headLupdate'])->name('head.logs.update');
+    });
+});
+
+Route::group(['prefix'=> 'admin'], function ()
 {
     Route::group(['middleware'=>'admin.guest'], function(){
         Route::get('login', [AdminController::class, 'index'])->name('admin.login');
-        Route::get('register', [AdminController::class, 'register'])->name('admin.register');
-        Route::post('login', [AdminController::class, 'authenticate'])->name('admin.authenticate');
+        Route::post('authenticate', [AdminController::class, 'authenticate'])->name('admin.authenticate')->middleware('web');
     });
 
     Route::group(['middleware'=> 'admin.auth'], function(){
@@ -30,6 +148,10 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('form', [AdminController::class, 'form'])->name('admin.form');
         Route::get('table', [AdminController::class, 'table'])->name('admin.table');
+        Route::get('change-password', [AdminController::class, 'changePassword'])->name('admin.change-password');
+        Route::post('update-password', [AdminController::class, 'updatePassword'])->name('admin.update-password');
+        // /Route::get('admin/chart' , [UserController::class, 'userChart'])->name('admin.chart');
+
 
         //User Routes
         Route::get('users/archives' , [UserController::class, 'archives'])->name('users.archives');
@@ -37,6 +159,7 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::put('users/unarchive/{id}' , [UserController::class, 'unarchive'])->name('users.unarchive');
         Route::resource('users', UserController::class);
         Route::get('users' , [UserController::class, 'read'])->name('users.read');
+        //Route::get('users/chart' , [UserController::class, 'userChart'])->name('users.chart');
 
         //Children Group Routes
         Route::get('children-group/create', [ChildrenGroupController::class, 'index'])->name('children-group.create');
@@ -45,7 +168,7 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::get('children-group/delete/{id}', [ChildrenGroupController::class, 'delete'])->name('children-group.delete');
         Route::get('children-group/edit/{id}', [ChildrenGroupController::class, 'edit'])->name('children-group.edit');
         Route::put('children-group/update/{id}', [ChildrenGroupController::class, 'update'])->name('children-group.update');
-        
+
         //Children Routes
         Route::get('children/create', [ChildrenController::class, 'index'])->name('children.create');
         Route::post('children/store', [ChildrenController::class, 'store'])->name('children.store');

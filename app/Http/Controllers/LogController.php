@@ -17,6 +17,12 @@ class LogController extends Controller
         $data['logs'] = $query;
         return view('admin.logs.logs', $data);
     }
+    public function headLindex($id)
+    {
+        $query = Log::with(['children'])->where('child_id', '=', $id)->latest('id')->get();
+        $data['logs'] = $query;
+        return view('head.logs.list', $data)->with('id', $id);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -25,6 +31,11 @@ class LogController extends Controller
     {
         $data['children'] = Children::all();
         return view('admin.logs.create', $data);
+    }
+    public function headLcreate($id)
+    {
+        $child = Children::where('id', '=', $id)->first();
+        return view('head.logs.create')->with('child', $child);
     }
 
     /**
@@ -44,6 +55,20 @@ class LogController extends Controller
 
         return redirect()->route('logs.create')->with('success', 'Log created successfully!');
     }
+    public function headLstore(Request $request)
+    {
+        $request->validate([
+            'child_id' => 'required',
+            'details' => 'string|required'
+        ]);
+
+        $appointment = new Log();
+        $appointment->child_id = $request->child_id;
+        $appointment->details = $request->details;
+        $appointment->save();
+
+        return redirect()->route('head.logs.index', $request->child_id)->with('success', 'Log created successfully!');
+    }
 
     /**
      * Display the specified resource.
@@ -61,6 +86,11 @@ class LogController extends Controller
         $data['log'] = Log::find($id);
         $data['children'] = Children::all();
         return view('admin.logs.edit', $data);
+    }
+    public function headLedit($id)
+    {
+        $log = Log::find($id)->first();
+        return view('head.logs.edit')->with('log', $log);
     }
 
     /**
@@ -80,6 +110,20 @@ class LogController extends Controller
 
         return redirect()->route('logs.index')->with('success', 'Log updated successfully!');
     }
+    public function headLupdate(Request $request)
+    {
+        $request->validate([
+            'child_id' => 'nullable',
+            'details' => 'string|required'
+        ]);
+
+        $log = Log::find($request->id);
+        $log->child_id = $request->child_id;
+        $log->details = $request->details;
+        $log->update();
+
+        return redirect()->route('head.logs.index', $request->child_id)->with('success', 'Log updated successfully!');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -90,6 +134,14 @@ class LogController extends Controller
         $log->delete();
 
         return redirect()->route('logs.index')->with('success', 'Log deleted successfully');
+    }
+    public function headLdelete($id)
+    {
+        $log = Log::find($id);
+        $redirect = $log->child_id;
+        $log->delete();
+
+        return redirect()->route('head.logs.index', $redirect)->with('success', 'Log deleted successfully');
     }
 
     // public function archive(Request $request)

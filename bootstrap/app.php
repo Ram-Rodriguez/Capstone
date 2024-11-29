@@ -14,7 +14,19 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin.guest'=>\App\Http\Middleware\AdminRedirect::class,
             'admin.auth'=>\App\Http\Middleware\AdminAuthenticate::class,
+            'head.guest'=>\App\Http\Middleware\HeadRedirect::class,
+            'head.auth'=>\App\Http\Middleware\HeadAuthenticate::class,
+            'staff.guest'=>\App\Http\Middleware\StaffRedirect::class,
+            'staff.auth'=>\App\Http\Middleware\StaffAuthenticate::class,
         ]);
+        // $middleware->alias([
+        //     'head.guest'=>\App\Http\Middleware\HeadRedirect::class,
+        //     'head.auth'=>\App\Http\Middleware\HeadAuthenticate::class,
+        // ]);
+        // $middleware->redirectTo(
+        //     guests:'/head/login',
+        //     users:'/head/dashboard'
+        // );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
