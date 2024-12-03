@@ -27,23 +27,49 @@
 
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>{{ $childrenRecords->count }}</h3>
+                                <h3>{{$childrenRecords}}</h3>
                                 <p>Children Records</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-person-add"></i>
                             </div>
-                            <a href="{{ route('head.children.read') }}" class="small-box-footer">More info <i
+                            <a href="{{ route('staff.children.read') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
+
+
+                        <div class="card card-light">
+                            <div class="card-header">
+                                <h3>Children Groups</h3>
+                                {{-- <p>Upcoming Court Hearings</p> --}}
+                            </div>
+                            <div class="card-body">
+                                @forelse($childrenGroup as $item)
+                                <div class="small-box bg-dark">
+                                    <div class="inner">
+                                        <h3>{{$item->name}}</h3>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                    <a href="{{route('staff.children.group-read', $item->id)}}" class="small-box-footer">More info <i
+                                            class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                                @empty
+                                <h3>There are no groups assigned to you.</h3>
+                                @endforelse
+                            </div>
+
+                        </div>
+
                     </div>
 
-                    <div class="col">
+                    {{-- <div class="col">
 
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ $courtHearings->count }}</h3>
-                                <p>Court Appointments</p>
+                                <h3>20</h3>
+                                <p>Appointments</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
@@ -51,193 +77,35 @@
                             <a href="{{ route('head.appointments.read') }}" class="small-box-footer">More info <i
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
-                    </div>
-                    <div class="col">
+                    </div> --}}
 
-                        <div class="small-box bg-success">
-                            <div class="inner">
-                                <h3>{{ $groups->count }}</h3>
-                                <p>Groups</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="{{ route('head.children-group.read') }}" class="small-box-footer">More info <i
-                                    class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col">
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3>Upcoming Court Hearings</h3>
+                                <h3>Upcoming Appointments</h3>
                                 {{-- <p>Upcoming Court Hearings</p> --}}
                             </div>
                             <div class="card-body">
                                 <div id="accordion">
                                     @forelse($appointments as $item)
-                                        {{-- <div class="card card-primary m-3">
-                                            <div class="card-body">
-                                                <p>{{ $item->appointment_date }}</p>
-                                                <p>{{ $item->title }}</p>
-                                            </div>
-                                        </div> --}}
                                         <div class="card card-primary">
                                             <div class="card-header">
                                                 <h4 class="card-title w-100">
                                                     <a class="d-block w-100" data-toggle="collapse" href="#collapse{{$item->id}}"
                                                         aria-expanded="true">
-                                                        {{ date('l jS \of F Y h:i A', strtotime($item->appointment_date)) }} - {{ $item->title }}
+                                                       {{ date('l jS \of F Y h:i A', strtotime($item->appointment_date)) }} - {{ $item->title }}
                                                     </a>
                                                 </h4>
                                             </div>
                                             <div id="collapse{{$item->id}}" class="collapse show" data-parent="#accordion"
                                                 style="">
                                                 <div class="card-body">
-                                                    <h3>Case: {{$item->child_id}} - {{$item->children?->first_name}} {{$item->children?->lastname}}</h3>
-                                                    {{$item->details}}
-                                                    <br>
-                                                    <p>Required Documents:</p>
-                                                    @if($item->csf == '1')
-                                                        <div class="">
-                                                            <label>Case Study Report</label>&emsp;
-                                                            <input type="checkbox" name="csf" class="form-check-input ml-2" value="1" disabled {{($item->children?->csf) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->poe == '1')
-                                                        <div class="">
-                                                            <label>Proof of Efforts</label>&emsp;
-                                                            <input type="checkbox" name="poe" class="form-check-input ml-2" value="1" disabled {{($item->children?->poe) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->cof == '1')
-                                                        <div class="">
-                                                            <label>Certificate of Foundling</label>&emsp;
-                                                            <input type="checkbox" name="cof" class="form-check-input ml-2" value="1" disabled {{($item->children?->cof) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->cola == '1')
-                                                        <div class="">
-                                                            <label>Certificate for Legal Adoption</label>&emsp;
-                                                            <input type="checkbox" name="cola" class="form-check-input ml-2" value="1" disabled {{($item->children?->cola) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->cfsc == '1')
-                                                        <div class="">
-                                                            <label>Certificate of Voluntarily Committed/Surrendered Child</label>&emsp;
-                                                            <input type="checkbox" name="cfsc" class="form-check-input ml-2" value="1" disabled {{($item->children?->cfsc) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->bc == '1')
-                                                        <div class="">
-                                                            <label>Birth Certificate</label>&emsp;
-                                                            <input type="checkbox" name="bc" class="form-check-input ml-2" value="1" disabled {{($item->children?->bc) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->admission_photo == '1')
-                                                        <div class="">
-                                                            <label>Photo of Child from Admission</label>&emsp;
-                                                            <input type="checkbox" name="admission_photo" class="form-check-input ml-2" value="1" disabled {{($item->children?->admission_photo) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->latest_photo == '1')
-                                                        <div class="">
-                                                            <label>Latest Photo of Child</label>&emsp;
-                                                            <input type="checkbox" name="latest_photo" class="form-check-input ml-2" value="1" disabled {{($item->children?->latest_photo) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
+                                                     <h3>Case: {{$item->child_id}} - {{$item->children?->first_name}} {{$item->children?->lastname}}</h3>
+                                                     <br>
+                                                     {{$item->details}}
                                                 </div>
                                             </div>
                                         </div>
-                                    @empty
-                                        <div class="card card-primary m-3">
-                                            <div class="card-body">
-                                                <h1>There are no appointments</h1>
-                                            </div>
-                                        </div>
-                                    @endforelse
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col col-lg-4">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3>Eligible Cases for Petition</h3>
-                                {{-- <p>Upcoming Court Hearings</p> --}}
-                            </div>
-                            <div class="card-body">
-                                <div id="accordion">
-                                    @forelse($eligible as $item)
-                                        {{-- <div class="card card-primary m-3">
-                                            <div class="card-body">
-                                                <p>{{ $item->appointment_date }}</p>
-                                                <p>{{ $item->title }}</p>
-                                            </div>
-                                        </div> --}}
-                                        @if(\Carbon\Carbon::now()->diffInMonths($item->doa) <= -3)
-                                            <div class="card card-primary">
-                                                <div class="card-header">
-                                                    <h4 class="card-title w-100">
-                                                        <a class="d-block w-100" data-toggle="collapse" href="#collapseEligible{{$item->id}}"
-                                                            aria-expanded="true">
-                                                            Case: {{$item->id}} - {{$item->first_name}} {{$item->lastname}}
-                                                            {{-- {{ date('l jS \of F Y h:i A', strtotime($item->appointment_date)) }} - {{ $item->title }} --}}
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseEligible{{$item->id}}" class="collapse show" data-parent="#accordion"
-                                                    style="">
-                                                    <div class="card-body">
-                                                        <p>Documents at hand:</p>
-                                                        @if($item->csf != null)
-                                                            <div class="">
-                                                                <label>Case Study Report</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                        @if($item->poe != null)
-                                                            <div class="">
-                                                                <label>Proof of Efforts</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                        @if($item->cof != null)
-                                                            <div class="">
-                                                                <label>Certificate of Foundling</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                        @if($item->cola != null)
-                                                            <div class="">
-                                                                <label>Certificate for Legal Adoption</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                        @if($item->cfsc != null)
-                                                            <div class="">
-                                                                <label>Certificate of Voluntarily Committed/Surrendered Child</label>
-                                                            </div>
-                                                        @endif
-                                                        @if($item->bc != null)
-                                                            <div class="">
-                                                                <label>Birth Certificate</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                        @if($item->admission_photo != null)
-                                                            <div class="">
-                                                                <label>Photo of Child from Admission</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                        @if($item->latest_photo != null)
-                                                            <div class="">
-                                                                <label>Latest Photo of Child</label>&emsp;
-                                                            </div>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
                                     @empty
                                         <div class="card card-primary m-3">
                                             <div class="card-body">

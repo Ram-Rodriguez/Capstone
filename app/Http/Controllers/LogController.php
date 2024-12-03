@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Log;
 use App\Models\Children;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class LogController extends Controller
 {
@@ -23,6 +25,12 @@ class LogController extends Controller
         $data['logs'] = $query;
         return view('head.logs.list', $data)->with('id', $id);
     }
+    public function staffLindex($id)
+    {
+        $query = Log::with(['children'])->where('child_id', '=', $id)->latest('id')->get();
+        $data['logs'] = $query;
+        return view('staff.logs.list', $data)->with('id', $id);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,6 +44,11 @@ class LogController extends Controller
     {
         $child = Children::where('id', '=', $id)->first();
         return view('head.logs.create')->with('child', $child);
+    }
+    public function staffLcreate($id)
+    {
+        $child = Children::where('id', '=', $id)->first();
+        return view('staff.logs.create')->with('child', $child);
     }
 
     /**
@@ -69,6 +82,21 @@ class LogController extends Controller
 
         return redirect()->route('head.logs.index', $request->child_id)->with('success', 'Log created successfully!');
     }
+    public function staffLstore(Request $request)
+    {
+        $request->validate([
+            'child_id' => 'required',
+            'details' => 'string|required'
+        ]);
+
+        $log = new Log();
+        $log->child_id = $request->child_id;
+        $log->details = $request->details;
+        $log->employee_id = Auth::user()->id;
+        $log->save();
+
+        return redirect()->route('staff.logs.index', $request->child_id)->with('success', 'Log created successfully!');
+    }
 
     /**
      * Display the specified resource.
@@ -91,6 +119,11 @@ class LogController extends Controller
     {
         $log = Log::find($id)->first();
         return view('head.logs.edit')->with('log', $log);
+    }
+    public function staffLedit($id)
+    {
+        $log = Log::find($id)->first();
+        return view('staff.logs.edit')->with('log', $log);
     }
 
     /**
@@ -124,6 +157,21 @@ class LogController extends Controller
 
         return redirect()->route('head.logs.index', $request->child_id)->with('success', 'Log updated successfully!');
     }
+    public function staffLupdate(Request $request)
+    {
+        $request->validate([
+            'child_id' => 'nullable',
+            'details' => 'string|required'
+        ]);
+
+        $log = Log::find($request->id);
+        $log->child_id = $request->child_id;
+        $log->details = $request->details;
+        $log->employee_id = Auth::user()->id;
+        $log->update();
+
+        return redirect()->route('staff.logs.index', $request->child_id)->with('success', 'Log updated successfully!');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -142,6 +190,14 @@ class LogController extends Controller
         $log->delete();
 
         return redirect()->route('head.logs.index', $redirect)->with('success', 'Log deleted successfully');
+    }
+    public function staffLdelete($id)
+    {
+        $log = Log::find($id);
+        $redirect = $log->child_id;
+        $log->delete();
+
+        return redirect()->route('staff.logs.index', $redirect)->with('success', 'Log deleted successfully');
     }
 
     // public function archive(Request $request)

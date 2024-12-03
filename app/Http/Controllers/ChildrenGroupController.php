@@ -69,7 +69,7 @@ class ChildrenGroupController extends Controller
 
     public function read()
     {
-        $data['children_group']= ChildrenGroup::with(['employee'])->latest('created_at')->all();
+        $data['children_group']= ChildrenGroup::with(['employee'])->latest('created_at')->get();
         return view('admin.children-group.children-group-list', $data);
     }
     public function headCGread()

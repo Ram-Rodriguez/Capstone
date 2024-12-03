@@ -1,4 +1,4 @@
-@extends('head.layout')
+@extends('staff.layout')
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
@@ -189,8 +189,8 @@
                              </div>
                              <div class="card-footer">
                                 <div>
-                                    <a role="button" class="btn btn-success" value="Edit" href="{{route('head.children.edit', $child->id)}}">Edit</a>
-                                    <a role="button" class="btn btn-info" value="Logs" href="{{route('head.logs.index', $child->id)}}">Logs</a>
+                                    <a role="button" class="btn btn-success" value="Edit" href="{{route('staff.children.edit', $child->id)}}">Edit</a>
+                                    <a role="button" class="btn btn-info" value="Logs" href="{{route('staff.logs.index', $child->id)}}">Logs</a>
                                 </div>
                             </div>
                     </div>

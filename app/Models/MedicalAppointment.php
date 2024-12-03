@@ -13,7 +13,7 @@ class MedicalAppointment extends Model
         'employee_id',
         'title',
         'details'
-    ]; 
+    ];
     protected $casts = [
         'appointment_date' => 'datetime'
     ];
@@ -21,5 +21,9 @@ class MedicalAppointment extends Model
     public function children()
     {
         return $this->belongsTo(Children::class, 'child_id');
-    }   
+    }
+    public function employee()
+    {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
 }

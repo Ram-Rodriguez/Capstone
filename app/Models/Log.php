@@ -10,10 +10,14 @@ class Log extends Model
     protected $fillable = [
         'child_id',
         'details'
-    ]; 
+    ];
 
     public function children()
     {
         return $this->belongsTo(Children::class, 'child_id');
-    } 
+    }
+    public function employee()
+    {
+        return $this->belongsTo(User::class, 'employee_id');
+    }
 }
