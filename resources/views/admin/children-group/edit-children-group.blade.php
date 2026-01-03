@@ -47,6 +47,16 @@
               @error('children_group_name')
                 <p class="text-danger">{{ $message }}</p>
               @enderror
+                <label>Employee in Charge</label>
+                <select name="employee_id" class="form-control">
+                    <option value="" disabled selected>Select Employee</option>
+                    @foreach ($employee as $item)
+                    <option value="{{ $item->id }}" {{($item->id == $children_group->employee_id) ? 'selected' : ''}} disabled>{{ $item->id }} - {{ $item->first_name }} {{ $item->last_name }}</option>
+                    @endforeach
+                </select>
+                @error('employee_id')
+                <p class="text-danger">{{$message}}</p>
+                @enderror
             </div>
 
             <div class="card-footer">

@@ -94,7 +94,8 @@ class ChildrenGroupController extends Controller
     public function edit($id)
     {
         $data['children_group'] = ChildrenGroup::with(['employee'])->find($id);
-        return view('admin.children-group.edit-children-group', $data);
+        $employee = User::all();
+        return view('admin.children-group.edit-children-group', $data)->with('employee', $employee);
     }
     public function headCGedit($id)
     {
