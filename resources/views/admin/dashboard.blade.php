@@ -23,7 +23,7 @@
             <div class="container-fluid">
 
                 <div class="row">
-                    <div class="col-lg-3 col-6">
+                    <div class="col text-center">
 
                         <div class="small-box bg-info">
                             <div class="inner">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-3 col-6">
+                    <div class="col text-center">
 
                         <div class="small-box bg-warning">
                             <div class="inner">
@@ -52,8 +52,10 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-lg-3 col-6">
+                <div class="row">
+                    <div class="col text-center">
 
                         <div class="small-box bg-danger">
                             <div class="inner">
@@ -67,7 +69,7 @@
                                     class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-6">
+                    <div class="col text-center">
 
                         <div class="small-box bg-success">
                             <div class="inner">
@@ -82,15 +84,103 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="card card-primary">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <div class="card card-primary">
+                            <canvas id="myChart2"></canvas>
+                        </div>
+                    </div>
+                    <div class="col text-center">
+                        <div class="card card-primary">
+                            <canvas id="myChart3"></canvas>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="row d-flex justify-content-between m-2">
             </div>
 
-            <div class="card card-danger">
-                <canvas id="myChart"></canvas>
-            </div>
-
               <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+              <script>
+                const ctx = document.getElementById('myChart');
+
+                new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                      label: '# of Admissions',
+                      data: [{{ $doaChart[0] }}, {{ $doaChart[1] }}, {{ $doaChart[2] }}, {{ $doaChart[3] }}, {{ $doaChart[4] }}, {{ $doaChart[5] }}, {{ $doaChart[6] }}, {{ $doaChart[7] }}, {{ $doaChart[8] }}, {{ $doaChart[9] }}, {{ $doaChart[10] }}, {{ $doaChart[11] }}],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              </script>
+              <script>
+                const ctx2 = document.getElementById('myChart2');
+
+                new Chart(ctx2, {
+                  type: 'bar',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                      label: '# of Court Hearings',
+                      data: [{{ $doaChart2[0] }}, {{ $doaChart2[1] }}, {{ $doaChart2[2] }}, {{ $doaChart2[3] }}, {{ $doaChart2[4] }}, {{ $doaChart2[5] }}, {{ $doaChart2[6] }}, {{ $doaChart2[7] }}, {{ $doaChart2[8] }}, {{ $doaChart2[9] }}, {{ $doaChart2[10] }}, {{ $doaChart2[11] }}],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              </script>
+              <script>
+                const ctx3 = document.getElementById('myChart3');
+
+                new Chart(ctx3, {
+                  type: 'bar',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                      label: '# of Medical Appointments',
+                        data: [{{ $doaChart2[0] }}, {{ $doaChart2[1] }}, {{ $doaChart2[2] }}, {{ $doaChart2[3] }}, {{ $doaChart2[4] }}, {{ $doaChart2[5] }}, {{ $doaChart2[6] }}, {{ $doaChart2[7] }}, {{ $doaChart2[8] }}, {{ $doaChart2[9] }}, {{ $doaChart2[10] }}, {{ $doaChart2[11] }}],
+                        borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              </script>
+
+            {{-- <div class="card card-danger">
+                <canvas id="myChart"></canvas>
+            </div> --}}
+
+              {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
               <script>
                 const ctx = document.getElementById('myChart');
@@ -109,7 +199,7 @@
                     }
                   }
                 });
-              </script>
+              </script> --}}
 
         </section>
 

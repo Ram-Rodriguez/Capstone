@@ -23,10 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
         //     'head.guest'=>\App\Http\Middleware\HeadRedirect::class,
         //     'head.auth'=>\App\Http\Middleware\HeadAuthenticate::class,
         // ]);
-        // $middleware->redirectTo(
-        //     guests:'/head/login',
-        //     users:'/head/dashboard'
-        // );
+        $middleware->redirectTo(
+            guests:'/staff/login',
+            users:'/staff/dashboard'
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

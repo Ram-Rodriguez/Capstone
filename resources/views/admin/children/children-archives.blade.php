@@ -44,7 +44,7 @@
                     <th>Full Name</th>
                     <th>Group</th>
                     <th>Date of Admission</th>
-                    <th>Unarchive</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>

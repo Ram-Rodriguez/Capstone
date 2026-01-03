@@ -47,7 +47,7 @@
           <a class="nav-link" href="{{ route('admin.change-password') }}" role="button">Account Settings<i class="fas fa-right-from-bracket"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.logout') }}" role="button">Log out<i class="fas fa-right-from-bracket"></i></a>
+          <a class="nav-link" href="{{ route('admin.logout') }}" role="button" onclick="return confirm('Are you sure you want to logout?')">Log out<i class="fas fa-right-from-bracket"></i></a>
         </li>
       </ul>
     </nav>
@@ -62,16 +62,6 @@
       </a>
 
       <div class="sidebar">
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
-          </div>
-        </div>
 
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -86,7 +76,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-user"></i>
                 <p>
                   Users
                   <i class="right fas fa-angle-left"></i>
@@ -115,7 +105,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-object-group"></i>
                 <p>
                   Children Group
                   <i class="right fas fa-angle-left"></i>
@@ -138,7 +128,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-file"></i>
                 <p>
                   Children Records
                   <i class="right fas fa-angle-left"></i>
@@ -167,7 +157,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-clock"></i>
                 <p>
                   Court Appointments
                   <i class="right fas fa-angle-left"></i>
@@ -190,7 +180,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-stethoscope"></i>
                 <p>
                   Medical Appointments
                   <i class="right fas fa-angle-left"></i>

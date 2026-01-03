@@ -44,8 +44,7 @@
                     <th>Full Name</th>
                     <th>Group</th>
                     <th>Date of Admission</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th colspan="2">Actions</th>
                   </tr>
                 </thead>
                 <tbody>

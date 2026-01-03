@@ -48,8 +48,8 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Created At</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th colspan="2">Actions</th>
+                    {{-- <th>Delete</th> --}}
                   </tr>
                 </thead>
                 <tbody>
@@ -57,10 +57,23 @@
                   <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->role}}</td>
+                    @if ( $item->middle_name != null )
                     <td>{{ $item->employee_number }}</td>
+                    @else
+                    <td>N/A</td>
+                    @endif
                     <td>{{ $item->first_name }}</td>
+                    @if ( $item->middle_name != null )
                     <td>{{ $item->middle_name }}</td>
+                    @else
+                    <td>N/A</td>
+                    @endif
+                    {{-- <td>{{ $item->middle_name }}</td> --}}
+                    @if ( $item->middle_name != null )
                     <td>{{ $item->last_name }}</td>
+                    @else
+                    <td>N/A</td>
+                    @endif
                     <td>{{ $item->email }}</td>
                     <td>{{ $item->created_at }}</td>
                     <td><a href="{{ route('users.edit', $item->id) }}" class="btn btn-primary">Edit</a></td>

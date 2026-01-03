@@ -47,7 +47,7 @@
           <a class="nav-link" href="{{ route('staff.change-password') }}" role="button">Account Settings<i class="fas fa-right-from-bracket"></i></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('staff.logout') }}" role="button">Log out<i class="fas fa-right-from-bracket"></i></a>
+          <a class="nav-link" href="{{ route('staff.logout') }}" role="button" onclick="return confirm('Are you sure you want to logout?')">Log out<i class="fas fa-right-from-bracket"></i></a>
         </li>
       </ul>
     </nav>
@@ -62,17 +62,6 @@
       </a>
 
       <div class="sidebar">
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
-          </div>
-        </div>
-
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 

@@ -48,7 +48,7 @@
                     <th>Last Name</th>
                     <th>Email</th>
                     <th>Created At</th>
-                    <th>Unarchive</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>

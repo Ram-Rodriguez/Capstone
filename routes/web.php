@@ -9,9 +9,9 @@ use App\Http\Controllers\CourtAppointmentController;
 use App\Http\Controllers\MedicalAppointmentController;
 use App\Http\Controllers\LogController;
 
-// Route::get('/', function () {
-//     return view('head.login');
-// });
+Route::get('/', function () {
+    return view('staff.login');
+});
 Route::group(['prefix'=>'staff'], function(){
     Route::group(['middleware'=>'staff.guest'], function(){
         Route::get('login', [UserController::class,'staffIndex'])->name('staff.login');

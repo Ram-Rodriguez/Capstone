@@ -44,8 +44,7 @@
                     <th>Appointment Date</th>
                     <th>Child of Concern</th>
                     <th>Title</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th colspan="2">Actions</th>
                   </tr>
                 </thead>
                 <tbody>

@@ -51,7 +51,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Admission Date</label>
-                                        <input type="date" name="doa" class="form-control" value="{{ $children->doa }}">
+                                        <input type="date" name="doa" class="form-control" value="{{ $children->doa }}" max="{{date('Y-m-d' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('doa')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror

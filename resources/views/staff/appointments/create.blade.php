@@ -38,7 +38,7 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label>Appointment Date</label>
-                                        <input type="datetime-local" name="appointment_date" class="form-control">
+                                        <input type="datetime-local" name="appointment_date" class="form-control" min="{{date('Y-m-d\TH:i' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('appointment_date')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror

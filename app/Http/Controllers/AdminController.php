@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Children;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -23,6 +24,7 @@ class AdminController extends Controller
             'email'=>'required',
             'password'=> 'required'
         ]);
+        // if(Auth::guard('admin')->attempt(['email'=> $request->email,'password'=> $request->password]))
         if(Auth::guard('admin')->attempt(['email'=> $request->email,'password'=> $request->password]))
         {
             //return dd(Auth::user());
@@ -36,17 +38,18 @@ class AdminController extends Controller
             //return dd(Auth::guard()->user());
             return redirect()->route('admin.dashboard');
         } else {
-            return redirect()->route('admin.login')->with('error', 'Something went wrong');
+            return redirect()->route('admin.login')->with('error', 'Invalid Credentials');
+            // return redirect()->route('admin.dashboard');
         }
     }
 
     public function register()
     {
         $user = new User();
-        $user->name="student";
-        $user->role="staff";
-        $user->email="student@gmail.com";
-        $user->password = Hash::make('admin');
+        $user->name="Admin4";
+        $user->role="admin";
+        $user->email="admin4@gmail.com";
+        $user->password = Hash::make('admin4');
         $user->save();
         return redirect()->route('admin.login')->with('success', 'User created successfully');
     }
@@ -58,6 +61,34 @@ class AdminController extends Controller
         $courtHearings = CourtAppointment::selectRaw('COUNT(*) as count')->first();
         $groups = ChildrenGroup::selectRaw('COUNT(*) as count')->first();
         $users = Children::selectRaw('MONTH(doa) as month, COUNT(*) as count')->whereYear('doa', date('Y'))->groupBy('month')->orderBy('month')->get();
+        //$januaryDOA = Children::selectRaw('COUNT(*) as count, MONTH(doa) january')->groupBy('january')->get();
+        $januaryDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '1')->count();
+        $februaryDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '2')->count();
+        $marchDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '3')->count();
+        $aprilDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '4')->count();
+        $mayDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '5')->count();
+        $juneDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '6')->count();
+        $julyDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '7')->count();
+        $augustDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '8')->count();
+        $septemberDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '9')->count();
+        $octoberDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '10')->count();
+        $novemberDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '11')->count();
+        $decemberDOA = Children::query()->where('is_archived', '=', '0')->whereMonth('doa', '12')->count();
+        $januaryCA = CourtAppointment::query()->whereMonth('appointment_date', '1')->count();
+        $februaryCA = CourtAppointment::query()->whereMonth('appointment_date', '2')->count();
+        $marchCA = CourtAppointment::query()->whereMonth('appointment_date', '3')->count();
+        $aprilCA = CourtAppointment::query()->whereMonth('appointment_date', '4')->count();
+        $mayCA = CourtAppointment::query()->whereMonth('appointment_date', '5')->count();
+        $juneCA = CourtAppointment::query()->whereMonth('appointment_date', '6')->count();
+        $julyCA = CourtAppointment::query()->whereMonth('appointment_date', '7')->count();
+        $augustCA = CourtAppointment::query()->whereMonth('appointment_date', '8')->count();
+        $septemberCA = CourtAppointment::query()->whereMonth('appointment_date', '9')->count();
+        $octoberCA = CourtAppointment::query()->whereMonth('appointment_date', '10')->count();
+        $novemberCA = CourtAppointment::query()->whereMonth('appointment_date', '11')->count();
+        $decemberCA = CourtAppointment::query()->whereMonth('appointment_date', '12')->count();
+
+        $doaChart = [$januaryDOA, $februaryDOA, $marchDOA, $aprilDOA, $mayDOA, $juneDOA, $julyDOA, $augustDOA, $septemberDOA, $octoberDOA, $novemberDOA, $decemberDOA];
+        $doaChart2 = [$januaryCA, $februaryCA, $marchCA, $aprilCA, $mayCA, $juneCA, $julyCA, $augustCA, $septemberCA, $octoberCA, $novemberCA, $decemberCA];
 
         $labels = [];
         $data = [];
@@ -91,7 +122,9 @@ class AdminController extends Controller
             ->with('activeUsers', $activeUsers)
             ->with('childrenRecords', $childrenRecords)
             ->with('courtHearings', $courtHearings)
-            ->with('groups', $groups);
+            ->with('groups', $groups)
+            ->with('doaChart', $doaChart)
+            ->with('doaChart2', $doaChart2);
         //return dd(compact('datasets', 'labels'));
         //return dd($users);
     }
@@ -124,6 +157,7 @@ class AdminController extends Controller
         $old_password = $request->old_password;
         $new_password = $request->new_password;
         $user = User::find(Auth::guard('admin')->user()->id);
+        // if(Hash::check($old_password, $user->password)){
         if(Hash::check($old_password, $user->password)){
             $user->password = $new_password;
             $user->update();

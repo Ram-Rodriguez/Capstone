@@ -41,7 +41,7 @@
                                     <div class="form-group col-md-4">
                                         <input type="hidden" name="children_group_id" value="{{$children->children_group_id}}">
                                         <label>Admission Date</label>
-                                        <input type="date" name="doa" class="form-control" value="{{ $children->doa }}">
+                                        <input type="date" name="doa" class="form-control" value="{{ $children->doa }}" max="{{date('Y-m-d' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('doa')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
@@ -114,7 +114,7 @@
                                     </div>
                                     <div class="form-group col-md-4">
                                         <label>Date of Birth</label>
-                                        <input type="date" name="dob" class="form-control" value="{{ $children->dob }}">
+                                        <input type="date" name="dob" class="form-control" value="{{ $children->dob }}" max="{{date('Y-m-d' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('dob')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror

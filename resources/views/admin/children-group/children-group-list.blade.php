@@ -43,8 +43,8 @@
                     <th>ID</th>
                     <th>Group Name</th>
                     <th>Date Created</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th colspan="2">Actions</th>
+                    {{-- <th>Delete</th> --}}
                   </tr>
                 </thead>
                 <tbody>
