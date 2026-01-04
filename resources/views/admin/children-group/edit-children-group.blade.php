@@ -49,9 +49,9 @@
               @enderror
                 <label>Employee in Charge</label>
                 <select name="employee_id" class="form-control">
-                    <option value="" disabled selected>Select Employee</option>
+                    <option value="" disabled>Select Employee</option>
                     @foreach ($employee as $item)
-                    <option value="{{ $item->id }}" {{($item->id == $children_group->employee_id) ? 'selected' : ''}} disabled>{{ $item->id }} - {{ $item->first_name }} {{ $item->last_name }}</option>
+                    <option value="{{ $item->id }}" {{($item->id == $children_group->employee_id) ? 'selected' : ''}}>{{ $item->id }} - {{ $item->first_name }} {{ $item->last_name }}</option>
                     @endforeach
                 </select>
                 @error('employee_id')

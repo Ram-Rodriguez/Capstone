@@ -25,6 +25,11 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+  @stack('styles')
+
   @yield('customCss')
 </head>
 
@@ -201,6 +206,12 @@
                 </li>
               </ul>
             </li>
+            <li class="nav-item ml-1">
+                <a href="{{ route('audit-logs.index') }}" class="nav-link">
+                    <i class="fa fa-fw fa-check-square"></i>
+                    <p>&nbsp Audit Logs</p>
+                </a>
+            </li>
           </ul>
         </nav>
 
@@ -250,6 +261,8 @@
   <script src="dist/js/demo.js"></script>
 
   <script src="dist/js/pages/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
   @yield('customJs')
 </body>
 

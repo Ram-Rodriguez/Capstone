@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Children;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Password;
 
 use Illuminate\Http\Request;
 
@@ -143,6 +144,23 @@ class AdminController extends Controller
         return view('admin.table');
     }
 
+    public function resetPassword(Request $request){
+        $request->validate([
+            'password' => 'required'
+            // Password::min(8)
+            // ->letters()      // requires at least one letter
+            // ->numbers()      // requires at least one number
+            // ->mixedCase()    // requires at least one uppercase and one lowercase letter
+            // ->symbols()],    // requires at least one symbol
+        ]);
+
+        $user = User::find($request->id);
+        $user->password = Hash::make($request->password);
+        $user->update();
+
+        return redirect()->back()->with('success','Password has been reset with the temporary password!');
+    }
+
     public function changePassword(){
         return view('admin.change-password');
     }
@@ -150,7 +168,12 @@ class AdminController extends Controller
     {
         $request->validate([
             'old_password' => 'required',
-            'new_password' => 'required',
+            'new_password' => ['required',
+            Password::min(8)
+            ->letters()      // requires at least one letter
+            ->numbers()      // requires at least one number
+            ->mixedCase()    // requires at least one uppercase and one lowercase letter
+            ->symbols()],    // requires at least one symbol
             'password_confirmation' => 'required|same:new_password'
         ]);
 

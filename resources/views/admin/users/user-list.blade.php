@@ -81,7 +81,7 @@
                     @csrf
                     @method('PUT')
                         <input type="hidden" name="id" value="{{ $item->id }}"/>
-                        <td><button type="submit" class="btn btn-danger">Archive</button></td>
+                        <td><button type="submit" class="btn btn-danger" {{ ($item->employee_number == Auth::guard('admin')->user()->employee_number ) ? 'disabled' : '' }}>Archive</button></td>
                     </form>
                   </tr>
                   @empty
@@ -90,6 +90,9 @@
                     </tr>
                 @endforelse
               </table>
+              {{-- <div class="audit-pagination mt-3">
+                {{ $users->links() }}
+                </div> --}}
             </div>
 
           </div>

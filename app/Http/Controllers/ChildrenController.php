@@ -115,7 +115,7 @@ class ChildrenController extends Controller
                 'latest_photo' => $latest_photo ??= null
             ]);
 
-            return redirect()->route('head.children.create')->with('success', 'Record added successfully');
+            return redirect()->route('head.children.list')->with('success', 'Record added successfully');
 
     }
 
@@ -227,7 +227,7 @@ class ChildrenController extends Controller
             'latest_photo' => $latest_photo ??= null
         ]);
 
-        return redirect()->route('children.create')->with('success', 'Record added successfully');
+        return redirect()->route('admin.children.children-list')->with('success', 'Record added successfully');
     }
 
     public function read(){

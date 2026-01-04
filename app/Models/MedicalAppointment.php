@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 
 class MedicalAppointment extends Model
 {
+    use Auditable;
     protected $table = 'medical_appointments';
     protected $fillable = [
         'appointment_date',

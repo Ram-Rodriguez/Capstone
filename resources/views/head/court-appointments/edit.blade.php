@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('head.appointments.read')}}">Court Appointments</a></li>
                         <li class="breadcrumb-item active">Update Court Appointment</li>
                     </ol>
                 </div>
@@ -40,7 +40,7 @@
                                 <div class="row">
                                     <div class="form-group col">
                                         <label>Appointment Date</label>
-                                        <input type="datetime-local" name="appointment_date" class="form-control" value="{{ date('Y-m-d\TH:i', strtotime($appointment->appointment_date)) }}" max="{{date('Y-m-d\TH:i' , strtotime(\Carbon\Carbon::now()))}}">
+                                        <input type="datetime-local" name="appointment_date" class="form-control" value="{{ date('Y-m-d\TH:i', strtotime($appointment->appointment_date)) }}" min="{{date('Y-m-d\TH:i' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('appointment_date')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\ChildrenGroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
@@ -147,6 +148,8 @@ Route::group(['prefix'=> 'admin'], function ()
         Route::get('table', [AdminController::class, 'table'])->name('admin.table');
         Route::get('change-password', [AdminController::class, 'changePassword'])->name('admin.change-password');
         Route::post('update-password', [AdminController::class, 'updatePassword'])->name('admin.update-password');
+        Route::put('reset-password/{id}', [AdminController::class, 'resetPassword'])->name('admin.reset-password');
+        Route::get('audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
         // /Route::get('admin/chart' , [UserController::class, 'userChart'])->name('admin.chart');
 
 

@@ -49,7 +49,7 @@ class ChildrenGroupController extends Controller
         $data->name = $request->children_group_name ;
         $data->save();
 
-        return redirect()->route('children-group.create')->with('success', 'Children Group Added Successfully!');
+        return redirect()->route('admin.children-group.children-group')->with('success', 'Children Group Added Successfully!');
     }
     public function headCGstore(Request $request)
     {
@@ -64,7 +64,7 @@ class ChildrenGroupController extends Controller
         $data->name = $request->children_group_name ;
         $data->save();
 
-        return redirect()->route('head.children-group.create')->with('success', 'Children Group Added Successfully!');
+        return redirect()->route('head.children-group.read')->with('success', 'Children Group Added Successfully!');
     }
 
     public function read()

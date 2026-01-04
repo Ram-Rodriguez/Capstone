@@ -16,7 +16,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ route('head.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('head.children.read') }}">Children Records</a></li>
             <li class="breadcrumb-item active">Archived Records</li>
           </ol>
         </div>

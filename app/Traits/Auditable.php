@@ -8,26 +8,62 @@ use App\Support\AuditContext;
 
 trait Auditable
 {
+    protected static function resolveActor(): array
+{
+    if (Auth::guard('admin')->check()) {
+        $user = Auth::guard('admin')->user();
+
+        return [
+            'user_id'         => $user->id,
+            'employee_number' => $user->employee_number,
+            'role'            => 'admin',
+        ];
+    }
+
+    else {
+        $user = Auth::user();
+
+        return [
+            'user_id'         => $user->id,
+            'employee_number' => $user->employee_number
+        ];
+    }
+
+    // return [
+    //     'user_id'         => null,
+    //     'employee_number' => null,
+    //     'role'            => 'system',
+    // ];
+}
     protected static function bootAuditable()
     {
         static::updating(function ($model) {
-            $action = property_exists($model, 'is_archived') && $model->is_archived
-            ? 'updated'
-            : 'deleted';
-            self::logChange($model, $action);
+            // $action = property_exists($model, 'is_archived') && $model->is_archived = 1
+            // ? 'updated'
+            // : 'deleted';
+            self::logChange($model, 'updated');
         });
 
         static::deleting(function ($model) {
-            $action = property_exists($model, 'is_archived') && $model->is_archived
-            ? 'archived'
-            : 'deleted';
-            self::logChange($model, $action);
+            self::logChange($model, 'deleted');
         });
     }
 
     protected static function logChange($model, $action)
     {
-        $user = Auth::user();
+        $actor = self::resolveActor();
+
+        if ($action === 'deleted') {
+            AuditLog::create([
+                'employee_number' => $actor['employee_number'],
+                'table_name'      => $model->getTable(),
+                'record_id'       => $model->getKey(),
+                'action'          => 'deleted',
+                'old_values'      => $model->getOriginal(),
+                'new_values'      => null,
+            ]);
+            return;
+        }
         $dirty = $model->getDirty();
         $original = $model->getOriginal();
 
@@ -54,7 +90,7 @@ trait Auditable
         }
 
         AuditLog::create([
-            'employee_number' => Auth::guard('admin')->user()->employee_number,
+            'employee_number' => $actor['employee_number'],
             'table_name' => $model->getTable(),
             'record_id'  => $model->getKey(),
             'action'     => $action,

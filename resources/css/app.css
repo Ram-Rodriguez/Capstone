@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.audit-pagination svg {
+    width: 16px;
+    height: 16px;
+}

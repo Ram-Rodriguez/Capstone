@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 
 class CourtAppointment extends Model
 {
+    use Auditable;
     protected $table = 'court_appointments';
     protected $fillable = [
         'appointment_date',
@@ -20,7 +22,7 @@ class CourtAppointment extends Model
         'bc',
         'admission_photo',
         'latest_photo',
-    ]; 
+    ];
     protected $casts = [
         'appointment_date' => 'datetime'
     ];
@@ -28,9 +30,9 @@ class CourtAppointment extends Model
     public function children()
     {
         return $this->belongsTo(Children::class, 'child_id');
-    }   
+    }
     public function employee()
     {
         return $this->belongsTo(User::class, 'employee_id');
-    }   
+    }
 }

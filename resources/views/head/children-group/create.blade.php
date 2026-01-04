@@ -11,8 +11,8 @@
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="{{ route('head.dashboard') }}">Home</a></li>
-          <li class="breadcrumb-item active">Children Group</li>
+          <li class="breadcrumb-item"><a href="{{ route('head.children-group.read') }}">Children Groups</a></li>
+          <li class="breadcrumb-item active">Create</li>
         </ol>
       </div>
     </div>

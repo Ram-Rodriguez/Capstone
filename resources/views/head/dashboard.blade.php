@@ -10,8 +10,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
+                            {{-- <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Dashboard</li> --}}
                         </ol>
                     </div>
                 </div>
@@ -69,98 +69,116 @@
 
                 <div class="row">
                     <div class="col">
-                        <div class="card card-primary">
-                            <div class="card-header">
-                                <h3>Upcoming Court Hearings</h3>
-                                {{-- <p>Upcoming Court Hearings</p> --}}
-                            </div>
-                            <div class="card-body">
-                                <div id="accordion">
-                                    @forelse($appointments as $item)
-                                        {{-- <div class="card card-primary m-3">
-                                            <div class="card-body">
-                                                <p>{{ $item->appointment_date }}</p>
-                                                <p>{{ $item->title }}</p>
-                                            </div>
-                                        </div> --}}
-                                        <div class="card card-primary">
-                                            <div class="card-header">
-                                                <h4 class="card-title w-100">
-                                                    <a class="d-block w-100" data-toggle="collapse" href="#collapse{{$item->id}}"
-                                                        aria-expanded="true">
-                                                        {{ date('l jS \of F Y h:i A', strtotime($item->appointment_date)) }} - {{ $item->title }}
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapse{{$item->id}}" class="collapse show" data-parent="#accordion"
-                                                style="">
-                                                <div class="card-body">
-                                                    <h3>Case: {{$item->child_id}} - {{$item->children?->first_name}} {{$item->children?->lastname}}</h3>
-                                                    {{$item->details}}
-                                                    <br>
-                                                    <p>Required Documents:</p>
-                                                    @if($item->csf == '1')
-                                                        <div class="">
-                                                            <label>Case Study Report</label>&emsp;
-                                                            <input type="checkbox" name="csf" class="form-check-input ml-2" value="1" disabled {{($item->children?->csf) ? 'checked' : ''}}>
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3>Upcoming Court Hearings</h3>
+                                        {{-- <p>Upcoming Court Hearings</p> --}}
+                                    </div>
+                                    <div class="card-body">
+                                        <div id="accordion">
+                                            @forelse($appointments as $item)
+                                                {{-- <div class="card card-primary m-3">
+                                                    <div class="card-body">
+                                                        <p>{{ $item->appointment_date }}</p>
+                                                        <p>{{ $item->title }}</p>
+                                                    </div>
+                                                </div> --}}
+                                                <div class="card card-primary">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title w-100">
+                                                            <a class="d-block w-100" data-toggle="collapse" href="#collapse{{$item->id}}"
+                                                                aria-expanded="true">
+                                                                {{ date('l jS \of F Y h:i A', strtotime($item->appointment_date)) }} - {{ $item->title }}
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse{{$item->id}}" class="collapse show" data-parent="#accordion"
+                                                        style="">
+                                                        <div class="card-body">
+                                                            <h3>Case: {{$item->child_id}} - {{$item->children?->first_name}} {{$item->children?->lastname}}</h3>
+                                                            {{$item->details}}
+                                                            <br>
+                                                            <p>Required Documents:</p>
+                                                            @if($item->csf == '1')
+                                                                <div class="">
+                                                                    <label>Case Study Report</label>&emsp;
+                                                                    <input type="checkbox" name="csf" class="form-check-input ml-2" value="1" disabled {{($item->children?->csf) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->poe == '1')
+                                                                <div class="">
+                                                                    <label>Proof of Efforts</label>&emsp;
+                                                                    <input type="checkbox" name="poe" class="form-check-input ml-2" value="1" disabled {{($item->children?->poe) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->cof == '1')
+                                                                <div class="">
+                                                                    <label>Certificate of Foundling</label>&emsp;
+                                                                    <input type="checkbox" name="cof" class="form-check-input ml-2" value="1" disabled {{($item->children?->cof) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->cola == '1')
+                                                                <div class="">
+                                                                    <label>Certificate for Legal Adoption</label>&emsp;
+                                                                    <input type="checkbox" name="cola" class="form-check-input ml-2" value="1" disabled {{($item->children?->cola) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->cfsc == '1')
+                                                                <div class="">
+                                                                    <label>Certificate of Voluntarily Committed/Surrendered Child</label>&emsp;
+                                                                    <input type="checkbox" name="cfsc" class="form-check-input ml-2" value="1" disabled {{($item->children?->cfsc) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->bc == '1')
+                                                                <div class="">
+                                                                    <label>Birth Certificate</label>&emsp;
+                                                                    <input type="checkbox" name="bc" class="form-check-input ml-2" value="1" disabled {{($item->children?->bc) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->admission_photo == '1')
+                                                                <div class="">
+                                                                    <label>Photo of Child from Admission</label>&emsp;
+                                                                    <input type="checkbox" name="admission_photo" class="form-check-input ml-2" value="1" disabled {{($item->children?->admission_photo) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
+                                                            @if($item->latest_photo == '1')
+                                                                <div class="">
+                                                                    <label>Latest Photo of Child</label>&emsp;
+                                                                    <input type="checkbox" name="latest_photo" class="form-check-input ml-2" value="1" disabled {{($item->children?->latest_photo) ? 'checked' : ''}}>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
-                                                    @if($item->poe == '1')
-                                                        <div class="">
-                                                            <label>Proof of Efforts</label>&emsp;
-                                                            <input type="checkbox" name="poe" class="form-check-input ml-2" value="1" disabled {{($item->children?->poe) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->cof == '1')
-                                                        <div class="">
-                                                            <label>Certificate of Foundling</label>&emsp;
-                                                            <input type="checkbox" name="cof" class="form-check-input ml-2" value="1" disabled {{($item->children?->cof) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->cola == '1')
-                                                        <div class="">
-                                                            <label>Certificate for Legal Adoption</label>&emsp;
-                                                            <input type="checkbox" name="cola" class="form-check-input ml-2" value="1" disabled {{($item->children?->cola) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->cfsc == '1')
-                                                        <div class="">
-                                                            <label>Certificate of Voluntarily Committed/Surrendered Child</label>&emsp;
-                                                            <input type="checkbox" name="cfsc" class="form-check-input ml-2" value="1" disabled {{($item->children?->cfsc) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->bc == '1')
-                                                        <div class="">
-                                                            <label>Birth Certificate</label>&emsp;
-                                                            <input type="checkbox" name="bc" class="form-check-input ml-2" value="1" disabled {{($item->children?->bc) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->admission_photo == '1')
-                                                        <div class="">
-                                                            <label>Photo of Child from Admission</label>&emsp;
-                                                            <input type="checkbox" name="admission_photo" class="form-check-input ml-2" value="1" disabled {{($item->children?->admission_photo) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
-                                                    @if($item->latest_photo == '1')
-                                                        <div class="">
-                                                            <label>Latest Photo of Child</label>&emsp;
-                                                            <input type="checkbox" name="latest_photo" class="form-check-input ml-2" value="1" disabled {{($item->children?->latest_photo) ? 'checked' : ''}}>
-                                                        </div>
-                                                    @endif
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            @empty
+                                                <div class="card card-primary m-3">
+                                                    <div class="card-body">
+                                                        <h1>There are no appointments</h1>
+                                                    </div>
+                                                </div>
+                                            @endforelse
                                         </div>
-                                    @empty
-                                        <div class="card card-primary m-3">
-                                            <div class="card-body">
-                                                <h1>There are no appointments</h1>
-                                            </div>
-                                        </div>
-                                    @endforelse
+
+                                    </div>
+
                                 </div>
-
                             </div>
-
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="card card-primary">
+                                    <canvas id="myChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="card card-primary">
+                                    <canvas id="myChart2"></canvas>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col col-lg-4">
@@ -368,5 +386,51 @@
                 //     options: barChartOptions
                 // })
     </script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+              <script>
+                const ctx = document.getElementById('myChart');
+
+                new Chart(ctx, {
+                  type: 'bar',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                      label: '# of Admissions',
+                      data: [{{ $doaChart[0] }}, {{ $doaChart[1] }}, {{ $doaChart[2] }}, {{ $doaChart[3] }}, {{ $doaChart[4] }}, {{ $doaChart[5] }}, {{ $doaChart[6] }}, {{ $doaChart[7] }}, {{ $doaChart[8] }}, {{ $doaChart[9] }}, {{ $doaChart[10] }}, {{ $doaChart[11] }}],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              </script>
+              <script>
+                const ctx2 = document.getElementById('myChart2');
+
+                new Chart(ctx2, {
+                  type: 'bar',
+                  data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                    datasets: [{
+                      label: '# of Court Hearings',
+                      data: [{{ $doaChart2[0] }}, {{ $doaChart2[1] }}, {{ $doaChart2[2] }}, {{ $doaChart2[3] }}, {{ $doaChart2[4] }}, {{ $doaChart2[5] }}, {{ $doaChart2[6] }}, {{ $doaChart2[7] }}, {{ $doaChart2[8] }}, {{ $doaChart2[9] }}, {{ $doaChart2[10] }}, {{ $doaChart2[11] }}],
+                      borderWidth: 1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      y: {
+                        beginAtZero: true
+                      }
+                    }
+                  }
+                });
+              </script>
     }
 @endsection
