@@ -25,6 +25,10 @@
   <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
 
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+  <link rel="icon" href="dist/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="dist/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="dist/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="dist/img/favicon-16x16.png">
   @yield('customCss')
 </head>
 
