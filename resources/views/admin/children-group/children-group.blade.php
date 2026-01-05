@@ -39,9 +39,9 @@
             @csrf
             <div class="card-body">
               <div class="form-group">
-                <label for="employee_id">Employee ID</label>
+                <label for="employee_id">Employee-in-Charge (Optional)</label>
                 <select name="employee_id" class="form-control">
-                    <option value="" disabled selected>Select Class</option>
+                    <option value="" disabled selected>Select Employee</option>
                     @foreach ($employee as $item)
                     <option value="{{ $item->id }}">{{ $item->id }} - {{ $item->first_name }} {{ $item->last_name }}</option>
                     @endforeach

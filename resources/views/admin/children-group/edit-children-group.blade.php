@@ -41,13 +41,13 @@
             <input type="hidden" name="id" value="{{ $children_group->id }}"/>
             <div class="card-body">
               <div class="form-group">
-                <label for="children_group_name">Children Group</label>
+                <label for="children_group_name">Children Group</label><label class="text-danger">*</label>
                 <input type="text" class="form-control" id="children_group_name" value="{{ old('name', $children_group->name) }}" name="children_group_name">
               </div>
               @error('children_group_name')
                 <p class="text-danger">{{ $message }}</p>
               @enderror
-                <label>Employee in Charge</label>
+                <label>Employee in Charge (Optional)</label>
                 <select name="employee_id" class="form-control">
                     <option value="" disabled>Select Employee</option>
                     @foreach ($employee as $item)

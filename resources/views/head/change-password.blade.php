@@ -42,21 +42,21 @@
                              <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label>Old Password</label>
+                                        <label>Old Password</label><label class="text-danger">*</label>
                                         <input type="password" name="old_password" class="form-control" placeholder="Enter old password">
                                         @error('old_password')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col">
-                                        <label>New Password</label>
+                                        <label>New Password</label><label class="text-danger">*</label>
                                         <input type="password" name="new_password" class="form-control" placeholder="Enter old password">
                                         @error('new_password')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col">
-                                        <label>Confirm New Password</label>
+                                        <label>Confirm New Password</label><label class="text-danger">*</label>
                                         <input type="password" name="password_confirmation" class="form-control" placeholder="Enter old password">
                                         @error('password_confirmation')
                                         <p class="text-danger">{{$message}}</p>

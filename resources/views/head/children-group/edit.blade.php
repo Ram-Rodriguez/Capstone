@@ -40,14 +40,14 @@
             @method('PUT')
             <div class="card-body">
               <div class="form-group col">
-                <label for="children_group_name">Children Group</label>
+                <label for="children_group_name">Children Group</label><label class="text-danger">*</label>
                 <input type="text" class="form-control" id="children_group_name" name="children_group_name" value="{{$children_group->name}}">
               </div>
               @error('children_group_name')
                 <p class="text-danger">{{ $message }}</p>
               @enderror
               <div class="form-group col">
-                <label>Employee in Charge</label>
+                <label>Employee in Charge (Optional)</label>
                 <select name="employee_id" class="form-control">
                     <option value="">Select Employee</option>
                     @foreach ($employee as $item)

@@ -37,7 +37,7 @@
                              <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Select Role</label>
+                                        <label>Select Role</label><label class="text-danger">*</label>
                                         <select name="role" class="form-control">
                                             <option value="staff">Staff</option>
                                             <option value="head">Head</option>
@@ -48,7 +48,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Employee Number</label>
+                                        <label>Employee Number</label><label class="text-danger">*</label>
                                         <input type="text" name="employee_number" class="form-control">
                                         @error('employee_number')
                                         <p class="text-danger">{{$message}}</p>
@@ -57,21 +57,21 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>First Name</label>
+                                        <label>First Name</label><label class="text-danger">*</label>
                                         <input type="text" name="first_name" class="form-control">
                                         @error('first_name')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Middle Name</label>
+                                        <label>Middle Name (Optional)</label>
                                         <input type="text" name="middle_name" class="form-control">
                                         @error('middle_name')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Last Name</label>
+                                        <label>Last Name</label><label class="text-danger">*</label>
                                         <input type="text" name="last_name" class="form-control">
                                         @error('last_name')
                                         <p class="text-danger">{{$message}}</p>
@@ -80,14 +80,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Email</label>
+                                        <label>Email</label><label class="text-danger">*</label>
                                         <input type="email" name="email" class="form-control">
                                         @error('email')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Password</label>
+                                        <label>Password</label><label class="text-danger">*</label>
                                         <input type="text" name="password" class="form-control">
                                         @error('password')
                                         <p class="text-danger">{{$message}}</p>

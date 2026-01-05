@@ -37,7 +37,7 @@
                              <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Select Children Group</label>
+                                        <label>Select Children Group (Optional)</label>
                                         <select name="children_group_id" class="form-control">
                                             <option value="" disabled selected>Select Class</option>
                                             @foreach ($children_groups as $item)
@@ -49,35 +49,35 @@
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Admission Date</label>
+                                        <label>Admission Date</label><label class="text-danger">*</label>
                                         <input type="date" name="doa" class="form-control" max="{{date('Y-m-d' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('doa')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Is Foundling</label><br>
+                                        <label>Is Foundling (Optional)</label><br>
                                         <input type="hidden" name="is_foundling" value="0">
                                         <input type="checkbox" name="is_foundling" class="form-check-input ml-2" value="1">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>First Name</label>
+                                        <label>First Name/Temporary Name</label><label class="text-danger">*</label>
                                         <input type="text" name="first_name" class="form-control">
                                         @error('first_name')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Middle Name</label>
+                                        <label>Middle Name (Optional)</label>
                                         <input type="text" name="middle_name" class="form-control">
                                         @error('middle_name')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Last Name</label>
+                                        <label>Last Name (Optional)</label>
                                         <input type="text" name="lastname" class="form-control">
                                         @error('lastname')
                                         <p class="text-danger">{{$message}}</p>
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Blood Type</label>
+                                        <label>Blood Type (Optional)</label>
                                         <select name="blood_type" class="form-control">
                                             <option value="" disabled selected>Select Blood Type</option>
                                             <option value="A+">A+</option>
@@ -100,14 +100,14 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Age</label>
+                                        <label>Age (Optional)</label>
                                         <input type="text" name="age" class="form-control">
                                         @error('age')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Height</label>
+                                        <label>Height (Optional)</label>
                                         <input type="text" name="height" class="form-control">
                                         @error('height')
                                         <p class="text-danger">{{$message}}</p>
@@ -116,14 +116,14 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Weight</label>
+                                        <label>Weight (Optional)</label>
                                         <input type="text" name="weight" class="form-control">
                                         @error('weight')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Date of Birth</label>
+                                        <label>Date of Birth (Optional)</label>
                                         <input type="date" name="dob" class="form-control" max="{{date('Y-m-d' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('dob')
                                         <p class="text-danger">{{$message}}</p>
@@ -132,21 +132,21 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Father's Name</label>
+                                        <label>Father's Name (Optional)</label>
                                         <input type="text" name="father_name" class="form-control">
                                         @error('father_name')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Mother's Name</label>
+                                        <label>Mother's Name (Optional)</label>
                                         <input type="text" name="mother_name" class="form-control">
                                         @error('mother_name')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Guardian's Name</label>
+                                        <label>Guardian's Name (Optional)</label>
                                         <input type="text" name="guardian_name" class="form-control">
                                         @error('guardian_name')
                                         <p class="text-danger">{{$message}}</p>
@@ -155,11 +155,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Case Study File</label>
+                                        <label>Case Study File (Optional)</label>
                                         <input type="file" name="csf" class="form-control">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Proof of Efforts</label>
+                                        <label>Proof of Efforts (Optional)</label>
                                         <input type="file" name="poe" class="form-control">
                                     </div>
                                     <div class="form-group col-md-4">
@@ -169,25 +169,25 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Certificate of Legal Adoption</label>
+                                        <label>Certificate of Legal Adoption (Optional)</label>
                                         <input type="file" name="cola" class="form-control">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Certificate for Surrendered Child</label>
+                                        <label>Certificate for Surrendered Child (Optional)</label>
                                         <input type="file" name="cfsc" class="form-control">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Birth Certificate</label>
+                                        <label>Birth Certificate (Optional)</label>
                                         <input type="file" name="bc" class="form-control">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>Admission Photo</label>
+                                        <label>Admission Photo (Optional)</label>
                                         <input type="file" name="admission_photo" class="form-control">
                                     </div>
                                     <div class="form-group col-md-4">
-                                        <label>Latest Photo</label>
+                                        <label>Latest Photo (Optional)</label>
                                         <input type="file" name="latest_photo" class="form-control">
                                     </div>
                                 </div>

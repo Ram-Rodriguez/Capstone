@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">
-                                        <label>First Name</label>
+                                        <label>First Name/Temporary Name</label>
                                         <input type="text" name="first_name" class="form-control" value="{{$child->first_name}}" readonly>
                                         @error('first_name')
                                         <p class="text-danger">{{$message}}</p>

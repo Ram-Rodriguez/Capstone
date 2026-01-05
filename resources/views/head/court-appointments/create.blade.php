@@ -37,14 +37,14 @@
                              <div class="card-body">
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label>Appointment Date</label>
+                                        <label>Appointment Date</label><label class="text-danger">*</label>
                                         <input type="datetime-local" name="appointment_date" class="form-control" min="{{date('Y-m-d\TH:i' , strtotime(\Carbon\Carbon::now()))}}">
                                         @error('appointment_date')
                                         <p class="text-danger">{{$message}}</p>
                                         @enderror
                                     </div>
                                     <div class="form-group col">
-                                        <label>Child of Interest</label>
+                                        <label>Child of Interest (Optional)</label>
                                         <select name="child_id" class="form-control">
                                             <option value="" disabled selected>Select Class</option>
                                             @foreach ($children as $item)
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label>Title</label>
+                                        <label>Title</label><label class="text-danger">*</label>
                                         <input type="text" name="title" class="form-control">
                                         @error('title')
                                         <p class="text-danger">{{$message}}</p>
@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="form-group col">
-                                        <label>Details</label>
+                                        <label>Details (Optional)</label>
                                         <textarea type="text" name="details" class="form-control" rows="3"></textarea>
                                         @error('details')
                                         <p class="text-danger">{{$message}}</p>
@@ -75,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <h3>Required Documents</h3>
+                                    <h3>Required Documents (Optional)</h3>
                                 </div>
                                 <div class="row">
                                     <div class="form-group col-md-4">

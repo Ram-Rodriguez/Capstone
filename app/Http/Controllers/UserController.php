@@ -36,7 +36,6 @@ class UserController extends Controller
             'role' => 'required',
             'employee_number' => 'required',
             'first_name' => 'required',
-            'middle_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
             'password' => ['required',
@@ -93,7 +92,6 @@ class UserController extends Controller
             'role' => 'required',
             'employee_number' => 'required',
             'first_name' => 'required',
-            'middle_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email'
         ]);
