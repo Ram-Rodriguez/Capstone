@@ -75,7 +75,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-object-group"></i>
                 <p>
                   Children Group
                   <i class="right fas fa-angle-left"></i>
@@ -98,7 +98,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-file"></i>
                 <p>
                   Children Records
                   <i class="right fas fa-angle-left"></i>
@@ -127,7 +127,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-clock"></i>
                 <p>
                   Court Appointments
                   <i class="right fas fa-angle-left"></i>

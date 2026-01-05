@@ -76,7 +76,7 @@
 
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fas fa-file"></i>
                 <p>
                   Children Records
                   <i class="right fas fa-angle-left"></i>
@@ -93,7 +93,7 @@
             </li>
             <li class="nav-item">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-chart-pie"></i>
+                <i class="nav-icon fa fa-fw fa-calendar"></i>
                 <p>
                   Appointments
                   <i class="right fas fa-angle-left"></i>
